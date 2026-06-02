@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/astrid-face.png" alt="Astrid" width="190">
+  <a href="https://youtu.be/hMdUBDRynO8" title="Meet Astrid — watch the intro (2:40)"><img src="docs/astrid-face.png" alt="Meet Astrid — click to watch the intro (2:40)" width="190"></a>
 </p>
 
 <p align="center">
@@ -7,13 +7,13 @@
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/Hv_I9FLQ6gA"><strong>▶ Watch the 2-minute explainer</strong></a> (YouTube&nbsp;↗)
+  <a href="https://youtu.be/hMdUBDRynO8"><strong>▶ Meet Astrid</strong></a> (2:40, YouTube&nbsp;↗)
   &nbsp;·&nbsp;
-  <a href="https://youtu.be/hMdUBDRynO8"><strong>Meet Astrid</strong></a> (60s intro,&nbsp;YouTube&nbsp;↗)
+  <a href="https://youtu.be/Hv_I9FLQ6gA"><strong>Watch the explainer</strong></a> (1:40, YouTube&nbsp;↗)
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/Hv_I9FLQ6gA"><img src="https://img.youtube.com/vi/Hv_I9FLQ6gA/maxresdefault.jpg" alt="Astrid — from project-card to action-card (2-minute explainer)" width="720"></a>
+  <a href="https://youtu.be/Hv_I9FLQ6gA"><img src="https://img.youtube.com/vi/Hv_I9FLQ6gA/maxresdefault.jpg" alt="Astrid — from project-card to action-card (1:40 explainer)" width="720"></a>
 </p>
 
 ---
