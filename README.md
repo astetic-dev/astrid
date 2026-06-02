@@ -1,13 +1,20 @@
-# Astrid — your project assistant
-
-<!-- To use a custom landscape poster instead of the auto thumbnail, drop it at
-     docs/astrid-intro-poster.jpg and swap the <img src> below. -->
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=hMdUBDRynO8"><img src="https://img.youtube.com/vi/hMdUBDRynO8/hqdefault.jpg" alt="Watch Astrid introduce herself" width="480"></a>
+  <img src="docs/astrid-logo.png" alt="Astrid — the calm operational memory for the work you run" width="660">
 </p>
-<p align="center"><a href="https://www.youtube.com/watch?v=hMdUBDRynO8"><strong>Watch Astrid introduce herself</strong></a></p>
+
+<p align="center">
+  <a href="https://youtu.be/Hv_I9FLQ6gA"><strong>▶ Watch the 2-minute explainer</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://youtu.be/hMdUBDRynO8"><strong>Meet Astrid (60s intro)</strong></a>
+</p>
+
+<p align="center">
+  <a href="https://youtu.be/Hv_I9FLQ6gA"><img src="https://img.youtube.com/vi/Hv_I9FLQ6gA/maxresdefault.jpg" alt="Astrid — from project-card to action-card (2-minute explainer)" width="720"></a>
+</p>
 
 ---
+
+# Astrid — your project assistant
 
 **Astrid keeps the truth of your projects in one place.** Every commitment, decision, blocker, and thing-to-watch becomes a small, durable card. Astrid reads those cards before it says anything, surfaces what's late or blocked, and turns the things you mention in passing into tracked work before they fall through a crack. Then it renders the whole portfolio as a dashboard you can open in a browser.
 
@@ -28,7 +35,7 @@ Every session after that starts the same way: Astrid reads your cards and tells 
 ## What's in the folder
 
 ```
-project-assistant/
+astrid/
 ├── README.md                ← you are here
 ├── identity.md              ← who Astrid is
 ├── spirit.md                ← Astrid's strategic character (collaborative, non-manipulative)
