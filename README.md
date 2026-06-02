@@ -1,5 +1,20 @@
 # Astrid — your project assistant
 
+<!-- VIDEO PLACEMENT ─ when the intro video is ready:
+     1. drop the poster image at docs/astrid-intro-poster.jpg
+     2. replace VIDEO_URL below with the video link
+     3. uncomment the poster block and delete the "coming soon" line beneath it
+<p align="center">
+  <a href="VIDEO_URL"><img src="docs/astrid-intro-poster.jpg" alt="Watch Astrid introduce herself" width="720"></a>
+</p>
+<p align="center"><a href="VIDEO_URL"><strong>Watch Astrid introduce herself</strong></a></p>
+-->
+<p align="center">
+  <strong>▶ Watch Astrid introduce herself</strong> · <em>intro video coming soon</em>
+</p>
+
+---
+
 **Astrid keeps the truth of your projects in one place.** Every commitment, decision, blocker, and thing-to-watch becomes a small, durable card. Astrid reads those cards before it says anything, surfaces what's late or blocked, and turns the things you mention in passing into tracked work before they fall through a crack. Then it renders the whole portfolio as a dashboard you can open in a browser.
 
 It is built on three operational cards — **project-card**, **action-card**, **meeting-card** — plus a supporting **contact-card**, and a few small scripts that index the cards and build the dashboard. No database, no SaaS, no account. Just JSON files you own, in a folder, that a Claude project reads.
