@@ -1,0 +1,14 @@
+{
+  "id": "ACME-CLOUD",
+  "title": "Acme Logistics — Cloud platform migration",
+  "status": "execution",
+  "health_level": "yellow",
+  "health_since": "2026-05-20",
+  "customer": "ACME / Acme Logistics B.V.",
+  "start_date": "2026-02-15",
+  "target_date": "2026-12-15",
+  "go_live_planned": "2026-11-15",
+  "classification": "M",
+  "risk_count": 2,
+  "file": "projects/ACME/cloud-migration/project.json"
+}

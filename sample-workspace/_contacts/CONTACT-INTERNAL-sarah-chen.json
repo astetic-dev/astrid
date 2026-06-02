@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "CONTACT-INTERNAL-sarah-chen",
+  "name": "Sarah Chen",
+  "organization": { "code": "INTERNAL", "name": "(you / your own organization)" },
+  "role": "Project manager (this is the sample 'you')",
+  "contact": { "email": "sarah.chen@example.com", "phone": null },
+  "active": true,
+  "since": "2026-02-15",
+  "involved_in": ["ACME-CLOUD"],
+  "notes": "Stand-in for the workspace owner in the sample. Replace with your own contact-card during onboarding."
+}

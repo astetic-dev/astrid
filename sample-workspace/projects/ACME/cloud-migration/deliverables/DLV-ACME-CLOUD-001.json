@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "DLV-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "name": "OrderHub cutover runbook (signed off)",
+  "description": "The step-by-step cutover and rollback procedure for OrderHub, reviewed by Northwind and accepted by Acme operations before the cutover window is committed.",
+  "format": "signed-off runbook (document)",
+  "owner": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "recipient": { "party": "customer", "person": "Mark Thompson", "contact_id": "CONTACT-ACME-mark-thompson" },
+  "milestone_id": "MS-ACME-CLOUD-001",
+  "due_date": "2026-06-20",
+  "baseline_date": "2026-06-20",
+  "status": "in-progress",
+  "acceptance_criteria": [
+    "Every cutover step has an owner and a timing",
+    "Rollback path tested and demonstrably fits inside the maintenance window",
+    "Reviewed by Northwind and accepted in writing by Acme operations"
+  ],
+  "sign_off": null,
+  "action_cards": ["SC-ACME-CLOUD-0002"],
+  "tags": ["runbook", "cutover"]
+}

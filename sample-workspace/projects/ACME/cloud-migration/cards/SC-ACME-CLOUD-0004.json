@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0004",
+  "title": "Watch the data-center decommission backstop (contract auto-renews 2026-12-31)",
+  "status": "DOING",
+  "type": "monitoring",
+  "priority": "medium",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "reporter": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "deadline": {
+    "date": null,
+    "text": "ongoing — hard backstop 2026-12-31"
+  },
+  "created": "2026-02-20T10:00:00Z",
+  "updated": "2026-05-20T11:20:00Z",
+  "acceptance_criteria": [
+    "On-prem hosts decommissioned and contract termination confirmed before 2026-12-31"
+  ],
+  "tags": [
+    "contract",
+    "backstop"
+  ],
+  "late": false,
+  "urgent": false
+}

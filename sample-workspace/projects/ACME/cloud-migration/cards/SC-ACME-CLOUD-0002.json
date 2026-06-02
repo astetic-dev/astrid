@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0002",
+  "title": "Write the OrderHub cutover runbook + rollback",
+  "status": "PLAN",
+  "type": "task",
+  "priority": "medium",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "reporter": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "deadline": {
+    "date": "2026-06-20",
+    "text": "draft ready for vendor review two weeks before cutover"
+  },
+  "created": "2026-05-12T09:05:00Z",
+  "updated": "2026-05-20T11:16:00Z",
+  "depends_on": [
+    "SC-ACME-CLOUD-0001"
+  ],
+  "sources": [
+    {
+      "type": "doc",
+      "ref": "ACLD/445522",
+      "note": "migration approach page"
+    }
+  ],
+  "acceptance_criteria": [
+    "Step-by-step cutover sequence with owners and timings",
+    "Tested rollback path that fits inside the maintenance window",
+    "Reviewed by Northwind"
+  ],
+  "tags": [
+    "runbook",
+    "cutover"
+  ],
+  "late": false,
+  "urgent": false
+}

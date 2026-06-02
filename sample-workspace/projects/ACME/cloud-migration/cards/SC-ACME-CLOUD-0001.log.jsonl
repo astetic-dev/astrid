@@ -1,0 +1,3 @@
+{"ts":"2026-05-12T09:00:00Z","who":"SC","action":"created","note":"Raised after the kickoff; sign-off is the gating item for cutover 1."}
+{"ts":"2026-05-20T11:15:00Z","who":"SC","action":"status","from":"TODO","to":"WAIT","note":"Handed to Amir; waiting on Northwind internal review."}
+{"ts":"2026-05-29T16:20:00Z","who":"SC","note":"Verbal OK on the sync, no written sign-off. New date 2026-06-04."}

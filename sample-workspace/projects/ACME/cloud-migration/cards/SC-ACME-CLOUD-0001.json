@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0001",
+  "title": "Get written landing-zone sign-off from Northwind",
+  "status": "WAIT",
+  "type": "blocker",
+  "priority": "high",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "vendor",
+    "person": "Amir Haddad"
+  },
+  "reporter": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "deadline": {
+    "date": "2026-05-29",
+    "text": "needed before the first cutover can be scheduled"
+  },
+  "created": "2026-05-12T09:00:00Z",
+  "updated": "2026-05-29T16:20:00Z",
+  "blocks": [
+    "SC-ACME-CLOUD-0002"
+  ],
+  "sources": [
+    {
+      "type": "meeting",
+      "ref": "MTG-ACME-CLOUD-2026-05-26-01",
+      "note": "raised at the weekly vendor sync"
+    },
+    {
+      "type": "issue",
+      "ref": "ACLD-118",
+      "note": "vendor ticket for the sign-off"
+    }
+  ],
+  "acceptance_criteria": [
+    "Landing-zone design document signed off by Northwind in writing",
+    "Sign-off references the agreed networking and backup configuration"
+  ],
+  "tags": [
+    "vendor",
+    "gating"
+  ],
+  "latest_update": {
+    "date": "2026-05-29",
+    "by": "Amir Haddad (Northwind)",
+    "summary": "Verbal 'looks good' on the sync, but **no written sign-off yet**. Amir says the backup config needs one more internal review on their side.\n- New promised date: 2026-06-04\n- This is now past its own deadline — first cutover (0002) cannot be scheduled until it lands"
+  },
+  "late": true,
+  "urgent": true
+}

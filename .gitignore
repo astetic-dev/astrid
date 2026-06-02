@@ -1,0 +1,8 @@
+.claude/
+_design/
+*.local.json
+.DS_Store
+Thumbs.db
+
+# Your own workspace lives outside the repo. If you keep it inside, ignore it:
+# /workspace/

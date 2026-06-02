@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "CONTACT-ACME-mark-thompson",
+  "name": "Mark Thompson",
+  "organization": { "code": "ACME", "name": "Acme Logistics B.V." },
+  "role": "Operations Director (project sponsor)",
+  "title": "Director of Operations",
+  "contact": { "email": "m.thompson@acme.example", "phone": null },
+  "active": true,
+  "since": "2026-02-15",
+  "involved_in": ["ACME-CLOUD"],
+  "notes": "Decision-maker. Time-pressured; responds well to a clear single recommendation."
+}

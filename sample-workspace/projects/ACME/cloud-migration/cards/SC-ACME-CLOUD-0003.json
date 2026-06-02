@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0003",
+  "title": "Decide: phased cutover vs all-three-in-one-weekend",
+  "status": "TODO",
+  "type": "decision",
+  "priority": "high",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "reporter": {
+    "party": "customer",
+    "person": "Mark Thompson"
+  },
+  "deadline": {
+    "date": "2026-06-10",
+    "text": "decision needed at the next steering"
+  },
+  "created": "2026-05-22T13:30:00Z",
+  "updated": "2026-05-22T13:30:00Z",
+  "relates_to": [
+    "SC-ACME-CLOUD-0002"
+  ],
+  "sources": [
+    {
+      "type": "meeting",
+      "ref": "MTG-ACME-CLOUD-2026-05-26-01",
+      "note": "sponsor pushed for one weekend"
+    }
+  ],
+  "acceptance_criteria": [
+    "Recommendation written with the risk trade-off stated in one paragraph",
+    "Decision recorded on the steering meeting-card with the decision-maker named"
+  ],
+  "tags": [
+    "steering",
+    "cutover"
+  ],
+  "latest_update": {
+    "date": "2026-05-26",
+    "by": "Sarah Chen",
+    "summary": "Mark wants all three apps cut over in a single weekend to minimize business disruption. Team's instinct is phased (OrderHub first, soak, then Billing + Reporting). Need a written recommendation before the 2026-06-10 steering."
+  },
+  "late": false,
+  "urgent": true
+}

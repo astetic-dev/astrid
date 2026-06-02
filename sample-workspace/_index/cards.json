@@ -1,0 +1,74 @@
+[
+  {
+    "id": "SC-ACME-CLOUD-0001",
+    "title": "Get written landing-zone sign-off from Northwind",
+    "status": "WAIT",
+    "priority": "high",
+    "late": true,
+    "urgent": true,
+    "assignee": "vendor / Amir Haddad",
+    "deadline": "2026-05-29",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0001.json"
+  },
+  {
+    "id": "SC-ACME-CLOUD-0002",
+    "title": "Write the OrderHub cutover runbook + rollback",
+    "status": "PLAN",
+    "priority": "medium",
+    "late": false,
+    "urgent": false,
+    "assignee": "internal / Sarah Chen",
+    "deadline": "2026-06-20",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0002.json"
+  },
+  {
+    "id": "SC-ACME-CLOUD-0003",
+    "title": "Decide: phased cutover vs all-three-in-one-weekend",
+    "status": "TODO",
+    "priority": "high",
+    "late": false,
+    "urgent": true,
+    "assignee": "internal / Sarah Chen",
+    "deadline": "2026-06-10",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0003.json"
+  },
+  {
+    "id": "SC-ACME-CLOUD-0004",
+    "title": "Watch the data-center decommission backstop (contract auto-renews 2026-12-31)",
+    "status": "DOING",
+    "priority": "medium",
+    "late": false,
+    "urgent": false,
+    "assignee": "internal / Sarah Chen",
+    "deadline": null,
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0004.json"
+  },
+  {
+    "id": "SC-ACME-CLOUD-0005",
+    "title": "Approve the landing-zone network design",
+    "status": "DONE",
+    "priority": "medium",
+    "late": false,
+    "urgent": false,
+    "assignee": "internal / Sarah Chen",
+    "deadline": "2026-05-08",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0005.json"
+  },
+  {
+    "id": "SC-ACME-CLOUD-0006",
+    "title": "Investigate Billing batch timeout in the Northwind test env",
+    "status": "DOING",
+    "priority": "medium",
+    "late": false,
+    "urgent": false,
+    "assignee": "internal / Sarah Chen",
+    "deadline": "2026-06-12",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0006.json"
+  }
+]

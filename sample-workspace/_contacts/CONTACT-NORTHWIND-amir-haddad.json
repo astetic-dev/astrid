@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "CONTACT-NORTHWIND-amir-haddad",
+  "name": "Amir Haddad",
+  "organization": { "code": "NORTHWIND", "name": "Northwind Cloud (hosting vendor)" },
+  "role": "Vendor solutions architect",
+  "contact": { "email": "amir.haddad@northwind.example", "phone": null },
+  "active": true,
+  "since": "2026-03-02",
+  "involved_in": ["ACME-CLOUD"],
+  "notes": "Owns the landing-zone build on the vendor side. Reliable but slow to confirm dates in writing."
+}

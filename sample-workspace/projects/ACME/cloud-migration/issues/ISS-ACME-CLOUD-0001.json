@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "ISS-ACME-CLOUD-0001",
+  "project_id": "ACME-CLOUD",
+  "title": "Billing nightly batch times out in the Northwind test environment",
+  "type": "defect",
+  "severity": "high",
+  "priority": "medium",
+  "status": "in-progress",
+  "reporter": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "assignee": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "environment": "Northwind test env, Billing 4.1, migrated dataset 2026-05-27",
+  "description": "During the first Billing dry-run on Northwind, the nightly invoice batch did not complete — it ran past the 2-hour window and was killed. It completes in ~35 minutes on-prem with the same dataset.",
+  "steps_to_reproduce": [
+    "Restore the 2026-05-27 dataset into the Northwind test env",
+    "Trigger the nightly invoice batch manually",
+    "Observe runtime exceed 2 hours without completing"
+  ],
+  "expected": "Batch completes in roughly the on-prem time (~35 min).",
+  "actual": "Batch runs >2h and is killed; no invoices produced.",
+  "resolution": null,
+  "resolution_note": null,
+  "duplicate_of": null,
+  "action_cards": ["SC-ACME-CLOUD-0006"],
+  "sources": [
+    { "type": "meeting", "ref": "MTG-ACME-CLOUD-2026-05-26-01", "note": "dry-run results discussed" }
+  ],
+  "external_ref": null,
+  "raised": "2026-05-28",
+  "resolved": null,
+  "tags": ["billing", "performance", "test-env"]
+}

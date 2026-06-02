@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0005",
+  "title": "Approve the landing-zone network design",
+  "status": "DONE",
+  "type": "decision",
+  "priority": "medium",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "reporter": {
+    "party": "vendor",
+    "person": "Amir Haddad"
+  },
+  "deadline": {
+    "date": "2026-05-08",
+    "text": "before landing-zone build starts"
+  },
+  "created": "2026-04-28T09:00:00Z",
+  "updated": "2026-05-07T14:00:00Z",
+  "tags": [
+    "networking",
+    "design"
+  ],
+  "late": false,
+  "urgent": false
+}

@@ -1,0 +1,2 @@
+{"ts":"2026-05-28T10:00:00Z","who":"SC","action":"created","note":"Spawned from issue ISS-ACME-CLOUD-0001 (Billing batch timeout)."}
+{"ts":"2026-05-28T10:01:00Z","who":"SC","action":"status","from":"TODO","to":"DOING","note":"Started profiling in the test env."}

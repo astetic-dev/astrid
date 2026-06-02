@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "ACME-CLOUD",
+  "title": "Acme Logistics — Cloud platform migration",
+  "purpose": "Move Acme's three remaining on-prem business applications to Northwind Cloud before the data-center contract ends on 2026-12-31. Staying on-prem past that date means a forced 12-month contract renewal Acme does not want to pay for.",
+  "scope_summary": {
+    "in_scope": [
+      "Lift-and-shift of the OrderHub, Billing, and Reporting applications",
+      "Northwind landing zone (networking, identity, backup)",
+      "Cutover runbook and rollback procedure per application",
+      "Decommissioning of the on-prem hosts after a 30-day soak"
+    ],
+    "out_of_scope": [
+      "Re-architecting any application to cloud-native (deferred)",
+      "The warehouse management system (separate project, ACME-WMS)",
+      "End-user device management"
+    ]
+  },
+  "success_criteria": [
+    "All three applications live on Northwind Cloud by 2026-11-15",
+    "No single cutover exceeds its agreed maintenance window",
+    "On-prem data center fully decommissioned before 2026-12-31",
+    "No P1 incidents attributable to the migration in the first 30 days"
+  ],
+  "status": "execution",
+  "health": {
+    "level": "yellow",
+    "since": "2026-05-20",
+    "note": "Landing-zone sign-off from the vendor is late; it gates the first cutover."
+  },
+  "customer": {
+    "code": "ACME",
+    "name": "Acme Logistics B.V.",
+    "industry": "Logistics / supply chain",
+    "project_lead": "CONTACT-ACME-mark-thompson",
+    "customer_project_id": "PRJ-2026-044"
+  },
+  "stakeholders": [
+    { "contact_id": "CONTACT-ACME-mark-thompson", "name": "Mark Thompson", "role": "Operations Director (sponsor)", "party": "customer", "decision_authority": "decision-maker" },
+    { "contact_id": "CONTACT-NORTHWIND-amir-haddad", "name": "Amir Haddad", "role": "Vendor solutions architect", "party": "vendor", "decision_authority": "consulted" },
+    { "contact_id": "CONTACT-INTERNAL-sarah-chen", "name": "Sarah Chen", "role": "Project manager", "party": "internal", "decision_authority": "approver" }
+  ],
+  "timeline": {
+    "start_date": "2026-02-15",
+    "target_date": "2026-12-15",
+    "go_live_planned": "2026-11-15",
+    "actual_end": null
+  },
+  "budget": {
+    "hours_estimated": 240,
+    "amount": 85000,
+    "currency": "EUR",
+    "funding_source": "Quote Q-2026-0118"
+  },
+  "environments": [
+    { "name": "Northwind landing zone", "url": null, "status": "build in progress — awaiting vendor sign-off" },
+    { "name": "On-prem (legacy)", "url": null, "status": "live; decommission after soak" }
+  ],
+  "third_parties": [
+    { "code": "NORTHWIND", "name": "Northwind Cloud", "role": "Hosting vendor", "contacts": ["CONTACT-NORTHWIND-amir-haddad"] }
+  ],
+  "risks": [
+    { "description": "Vendor landing-zone sign-off is late and gates the first cutover.", "mitigation": "Weekly vendor sync with a named owner and date.", "raised": "2026-05-20" },
+    { "description": "Data-center contract auto-renews on 2026-12-31 if not decommissioned in time.", "mitigation": "Hard backstop date tracked on the monitoring card.", "raised": "2026-02-20" }
+  ],
+  "classification": "M",
+  "references": {
+    "wiki": null,
+    "issue_epic": "ACLD-100",
+    "quote": "Q-2026-0118",
+    "repo": null
+  },
+  "action_cards_glob": "cards/SC-ACME-CLOUD-*.json",
+  "meetings_glob": "meetings/MTG-ACME-CLOUD-*.json"
+}

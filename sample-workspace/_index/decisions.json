@@ -1,0 +1,8 @@
+{
+  "id": "DEC-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "title": "Phased cutover over single-weekend big-bang",
+  "status": "proposed",
+  "file": "projects/ACME/cloud-migration/decisions/DEC-ACME-CLOUD-001.json",
+  "date": "2026-06-02"
+}

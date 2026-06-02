@@ -1,0 +1,12 @@
+{
+  "id": "RISK-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "title": "Vendor landing-zone sign-off slips, delaying the first cutover",
+  "status": "mitigating",
+  "file": "projects/ACME/cloud-migration/risks/RISK-ACME-CLOUD-001.json",
+  "probability": "high",
+  "impact": "high",
+  "score": 16,
+  "response": "mitigate",
+  "raised": "2026-05-20"
+}

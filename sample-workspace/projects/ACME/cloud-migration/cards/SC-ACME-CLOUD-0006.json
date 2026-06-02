@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0006",
+  "title": "Investigate Billing batch timeout in the Northwind test env",
+  "status": "DOING",
+  "type": "task",
+  "priority": "medium",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "reporter": {
+    "party": "internal",
+    "person": "Sarah Chen"
+  },
+  "deadline": {
+    "date": "2026-06-12",
+    "text": "before Billing cutover planning can proceed"
+  },
+  "created": "2026-05-28T10:00:00Z",
+  "updated": "2026-05-28T10:00:00Z",
+  "sources": [
+    {
+      "type": "issue",
+      "ref": "ISS-ACME-CLOUD-0001",
+      "note": "the issue this action follows from"
+    }
+  ],
+  "acceptance_criteria": [
+    "Root cause of the >2h batch runtime identified",
+    "A fix or mitigation proposed and validated in the test env"
+  ],
+  "tags": [
+    "billing",
+    "performance"
+  ],
+  "late": false,
+  "urgent": false
+}

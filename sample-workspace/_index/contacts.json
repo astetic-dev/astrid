@@ -1,0 +1,38 @@
+[
+  {
+    "id": "CONTACT-ACME-mark-thompson",
+    "name": "Mark Thompson",
+    "organization": "ACME / Acme Logistics B.V.",
+    "role": "Operations Director (project sponsor)",
+    "email": "m.thompson@acme.example",
+    "phone": null,
+    "active": true,
+    "departed_at": null,
+    "involved_in": "ACME-CLOUD",
+    "file": "_contacts/CONTACT-ACME-mark-thompson.json"
+  },
+  {
+    "id": "CONTACT-INTERNAL-sarah-chen",
+    "name": "Sarah Chen",
+    "organization": "INTERNAL / (you / your own organization)",
+    "role": "Project manager (this is the sample 'you')",
+    "email": "sarah.chen@example.com",
+    "phone": null,
+    "active": true,
+    "departed_at": null,
+    "involved_in": "ACME-CLOUD",
+    "file": "_contacts/CONTACT-INTERNAL-sarah-chen.json"
+  },
+  {
+    "id": "CONTACT-NORTHWIND-amir-haddad",
+    "name": "Amir Haddad",
+    "organization": "NORTHWIND / Northwind Cloud (hosting vendor)",
+    "role": "Vendor solutions architect",
+    "email": "amir.haddad@northwind.example",
+    "phone": null,
+    "active": true,
+    "departed_at": null,
+    "involved_in": "ACME-CLOUD",
+    "file": "_contacts/CONTACT-NORTHWIND-amir-haddad.json"
+  }
+]

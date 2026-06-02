@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "MTG-ACME-CLOUD-2026-05-26-01",
+  "project_id": "ACME-CLOUD",
+  "title": "Weekly vendor sync — landing-zone status & cutover strategy",
+  "date": "2026-05-26",
+  "duration_minutes": 30,
+  "meeting_type": "vendor-call",
+  "purpose": "Check landing-zone sign-off progress with Northwind and surface the sponsor's preference on cutover strategy.",
+  "desired_outcome": "A committed written-sign-off date, and a clear owner for the cutover-strategy recommendation.",
+  "attendees": [
+    { "contact_id": "CONTACT-INTERNAL-sarah-chen", "name": "Sarah Chen", "role": "project manager", "party": "internal" },
+    { "contact_id": "CONTACT-NORTHWIND-amir-haddad", "name": "Amir Haddad", "role": "vendor architect", "party": "vendor" }
+  ],
+  "user_role": "facilitator",
+  "decisions": [
+    { "text": "Cutover-strategy choice (phased vs single-weekend) goes to the 2026-06-10 steering as a written recommendation.", "owner": "Sarah Chen", "decided_by": "Sarah Chen" },
+    { "text": "Northwind commits to written landing-zone sign-off by 2026-06-04.", "owner": "Amir Haddad", "decided_by": "Amir Haddad" }
+  ],
+  "action_cards_created": ["SC-ACME-CLOUD-0003"],
+  "notes": "Amir gave a verbal OK on the landing zone but flagged one more internal backup-config review. Sarah noted the sign-off is now past its own deadline and updated card 0001. Mark was not on the call but had restated (via email) that he wants a single-weekend cutover.",
+  "previous_meeting_card_id": null,
+  "created_at": "2026-05-26T15:10:00Z",
+  "status": "logged"
+}

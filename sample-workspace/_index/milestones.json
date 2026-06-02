@@ -1,0 +1,11 @@
+{
+  "id": "MS-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "title": "OrderHub live on Northwind",
+  "status": "at-risk",
+  "file": "projects/ACME/cloud-migration/milestones/MS-ACME-CLOUD-001.json",
+  "target_date": "2026-09-15",
+  "baseline_date": "2026-09-01",
+  "actual_date": null,
+  "gate": true
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "DEC-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "title": "Phased cutover over single-weekend big-bang",
+  "status": "proposed",
+  "date": "2026-06-02",
+  "cynefin_domain": "complicated",
+  "context": "All three applications must move to Northwind before 2026-12-31. OrderHub feeds Billing downstream. The sponsor (Mark) wants a single-weekend cutover of all three to take one business-disruption hit. The delivery team believes a phased sequence is materially safer because a single weekend would force three rollbacks to contend for the same window if anything goes wrong. A decision is needed at the 2026-06-10 steering so the runbook work can be finalized.",
+  "decision": "We will cut over in phases: OrderHub first, a 2-week soak, then Billing and Reporting together. We will not attempt all three in one weekend.",
+  "consequences": "Two maintenance weekends instead of one, so a second (smaller) business-disruption window is accepted. In exchange, each cutover gets a clean, uncontended rollback path, and problems found in the OrderHub soak inform the Billing/Reporting cutover. The schedule must still clear the 2026-12-31 backstop with the extra soak period included.",
+  "decision_drivers": [
+    "OrderHub feeds Billing — a failed OrderHub cutover should not also jeopardize Billing in the same window",
+    "Rollback paths must not contend for one window",
+    "Must still clear the 2026-12-31 data-center backstop"
+  ],
+  "options_considered": [
+    { "option": "Phased: OrderHub first, soak, then Billing + Reporting", "pros": ["Uncontended rollback per app", "OrderHub soak de-risks the rest"], "cons": ["Two maintenance weekends", "Longer elapsed timeline"], "chosen": true },
+    { "option": "Single-weekend big-bang (all three)", "pros": ["One business-disruption hit", "Shortest elapsed timeline"], "cons": ["Three rollbacks contend for one window", "An OrderHub failure cascades into Billing immediately"], "chosen": false }
+  ],
+  "decision_makers": [
+    { "party": "customer", "person": "Mark Thompson", "contact_id": "CONTACT-ACME-mark-thompson" }
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "resolves_action_card": "SC-ACME-CLOUD-0003",
+  "decided_at_meeting": null,
+  "action_cards": ["SC-ACME-CLOUD-0002"],
+  "tags": ["cutover", "steering"]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "RISK-ACME-CLOUD-001",
+  "project_id": "ACME-CLOUD",
+  "title": "Vendor landing-zone sign-off slips, delaying the first cutover",
+  "description": "Northwind has not delivered written landing-zone sign-off. If it keeps slipping, the OrderHub cutover window cannot be committed to the sponsor, which cascades into the Billing and Reporting cutovers and erodes the slack against the 2026-12-31 data-center backstop.",
+  "risk_type": "threat",
+  "category": "schedule",
+  "probability": "high",
+  "impact": "high",
+  "score": 16,
+  "response": "mitigate",
+  "status": "mitigating",
+  "owner": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "mitigation": "Weekly vendor sync with a named owner and a committed date; escalate to the sponsor with the contract backstop attached if it slips again.",
+  "mitigation_action_cards": ["SC-ACME-CLOUD-0001"],
+  "trigger": "Verbal-only confirmation persisting past the card's own deadline (already occurred on 2026-05-29).",
+  "residual": "Even with sign-off on 2026-06-04, the cutover-window calendar is tight; a second slip would likely force a phase into the next month.",
+  "raised": "2026-05-20",
+  "last_reviewed": "2026-05-29",
+  "review_due": "2026-06-09",
+  "tags": ["vendor", "schedule"]
+}
