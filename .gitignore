@@ -4,5 +4,8 @@ _design/
 .DS_Store
 Thumbs.db
 
+# Large source video — too big for GitHub (100 MB limit). Extract stills into docs/ instead.
+docs/*.mp4
+
 # Your own workspace lives outside the repo. If you keep it inside, ignore it:
 # /workspace/

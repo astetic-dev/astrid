@@ -1,11 +1,15 @@
 <p align="center">
-  <img src="docs/astrid-logo.png" alt="Astrid — the calm operational memory for the work you run" width="660">
+  <img src="docs/astrid-face.png" alt="Astrid" width="190">
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/Hv_I9FLQ6gA"><strong>▶ Watch the 2-minute explainer</strong></a>
+  <img src="docs/astrid-logo.png" alt="Astrid — the calm operational memory for the work you run" width="620">
+</p>
+
+<p align="center">
+  <a href="https://youtu.be/Hv_I9FLQ6gA"><strong>▶ Watch the 2-minute explainer</strong></a> (YouTube&nbsp;↗)
   &nbsp;·&nbsp;
-  <a href="https://youtu.be/hMdUBDRynO8"><strong>Meet Astrid (60s intro)</strong></a>
+  <a href="https://youtu.be/hMdUBDRynO8"><strong>Meet Astrid</strong></a> (60s intro,&nbsp;YouTube&nbsp;↗)
 </p>
 
 <p align="center">
