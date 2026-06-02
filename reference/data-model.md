@@ -86,7 +86,7 @@ The `{customer}-{project}` substring is the join key: any card belongs to the pr
 
 ```
 workspace/
-├── _preferences.md                       ← how you work (read by Atlas each session)
+├── _preferences.md                       ← how you work (read by Astrid each session)
 ├── _contacts/
 │   └── CONTACT-ACME-mark-thompson.json
 ├── projects/
@@ -114,24 +114,24 @@ Contact-cards are centralized in `_contacts/` so a person's details — and thei
 
 The cards are the source of truth; the `_index/` is a derived, disposable cache that makes them fast to read and pretty to look at.
 
-- **`rebuild-index.ps1`** scans every card, recomputes the `late`/`urgent` auto-flags (writing them back into the cards), and emits the JSON indexes. Run it after any session that changes cards.
-- **`generate-dashboard.ps1`** reads the open-cards index, enriches each card with its `.md` body, `.log.jsonl`, and `latest_update`, and writes a single self-contained `dashboard.html` — projects as cards, drill into a project to see Urgent / In progress / Waiting columns, click a card for the full detail. Optional `-IssueBase` / `-WikiBase` parameters turn `issue`/`doc` source refs into deep links.
+- **`rebuild-index.ps1`** scans every card, recomputes the `late`/`urgent` auto-flags (writing them back), computes **`stale`/`days_idle`** per open action (stagnation — idle beyond `-StaleDays`, default 14), and computes per-project **reporting status** (`report_next_due`, `reporting_overdue`, `days_since_reported`) from `reporting.cadence` + `last_reported`. Emits the JSON indexes (always valid arrays, even when empty). Run it after any session that changes cards.
+- **`generate-dashboard.ps1`** reads the indexes, enriches each action-card with its `.md` body, `.log.jsonl`, and `latest_update`, loads the full register cards, and writes a single self-contained `dashboard.html`. Projects show a reporting badge; drill into a project for Urgent / In progress / Waiting columns **plus a Project register** (risks/issues/decisions/milestones/deliverables). Every card is clickable, and linked cards are **navigable** — open a risk, click through to its issue, click through to the action that resolves it. Stale actions are flagged. Optional `-IssueBase` / `-WikiBase` parameters turn `issue`/`doc` source refs into deep links.
 - **`validate-cards.ps1`** checks every card against its schema (full validation when `ajv-cli` is installed — `npm i -g ajv-cli` — and dependency-free light checks otherwise; having Node alone is not enough).
 
 Because the index is derived, you can delete `_index/` at any time and rebuild it. Nothing of value lives there.
 
-## What the person owns vs. what Atlas writes
+## What the person owns vs. what Astrid writes
 
 | Field | Owner | Notes |
 |---|---|---|
-| project-card.* | Co-authored at onboarding | Atlas proposes; the person confirms. Updated as the project evolves. |
-| action-card core (title, type, owner, deadline) | The person's commitment, Atlas's wording | Atlas shows-then-saves; uses the person's words. |
-| action-card.status | The person | Atlas proposes transitions; the person confirms. |
-| action-card.latest_update | Atlas | Kept true on every substantial change. |
+| project-card.* | Co-authored at onboarding | Astrid proposes; the person confirms. Updated as the project evolves. |
+| action-card core (title, type, owner, deadline) | The person's commitment, Astrid's wording | Astrid shows-then-saves; uses the person's words. |
+| action-card.status | The person | Astrid proposes transitions; the person confirms. |
+| action-card.latest_update | Astrid | Kept true on every substantial change. |
 | action-card.{late,urgent} | The system | Auto-computed. Never hand-set. |
-| meeting-card factual layer (decisions, notes, action_cards_created) | Atlas | The record of what happened. |
+| meeting-card factual layer (decisions, notes, action_cards_created) | Astrid | The record of what happened. |
 | meeting-card.{user_intent, analysis, user_reflections} | Miles + the person | The reflection layer — see the meeting-coach companion. |
-| extended cards (risk/decision/issue/milestone/deliverable) | Co-authored | Atlas proposes (show-then-save); the person owns assessments, decisions, sign-offs. Atlas keeps statuses and down-links current. |
+| extended cards (risk/decision/issue/milestone/deliverable) | Co-authored | Astrid proposes (show-then-save); the person owns assessments, decisions, sign-offs. Astrid keeps statuses and down-links current. |
 
 ## The extended card types
 
@@ -152,8 +152,16 @@ The defining edge is that **work flows down into action-cards**. Each of these c
 - `issue-card.action_cards[]` — the work to investigate/fix/answer the issue. *(Log the issue here; drive the fix as action-cards.)*
 - `risk-card.mitigation_action_cards[]` — the response that works the risk down.
 - `decision-card.action_cards[]` — the work the decision sets in motion; `decision-card.resolves_action_card` points back at the `type:"decision"` action-card it closes out.
-- `milestone-card.action_cards[]` + `milestone-card.deliverables[]` — what must complete for the moment to be reached.
-- `deliverable-card.action_cards[]` + `deliverable-card.milestone_id` — what produces it and which moment it rolls up to.
+- `milestone-card.action_cards[]` + `milestone-card.deliverables[]` + `milestone-card.issues[]` — what must complete for the moment to be reached, and the issues threatening it.
+- `deliverable-card.action_cards[]` + `deliverable-card.issues[]` + `deliverable-card.milestone_id` — what produces it, the issues raised against it, and which moment it rolls up to.
+
+The full set of chains this supports, all the way down to action-cards:
+
+- **risk → issue → action** (`risk.realized_as_issue` → `issue.action_cards[]`) and risk → action (`risk.mitigation_action_cards[]`)
+- **decision → action** (`decision.action_cards[]`, `decision.resolves_action_card`)
+- **issue → action** (`issue.action_cards[]`)
+- **milestone → issue → action** (`milestone.issues[]` → `issue.action_cards[]`) and milestone → deliverable → action
+- **deliverable → issue → action** (`deliverable.issues[]` → `issue.action_cards[]`) and deliverable → action
 
 ### Down-links are authoritative; reverse edges are derived
 
@@ -167,7 +175,7 @@ These are not duplicates. An **action-card of `type:"decision"`** is a decision 
 
 ### Terminal vs open status, per card type
 
-"Is this card still live?" is answered differently per type. Tooling (and Atlas) treat these statuses as **terminal** (everything else is open/active):
+"Is this card still live?" is answered differently per type. Tooling (and Astrid) treat these statuses as **terminal** (everything else is open/active):
 
 | Card | Terminal statuses |
 |---|---|

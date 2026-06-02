@@ -17,5 +17,6 @@
   "owner": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
   "deliverables": ["DLV-ACME-CLOUD-001"],
   "action_cards": ["SC-ACME-CLOUD-0001", "SC-ACME-CLOUD-0002"],
+  "issues": ["ISS-ACME-CLOUD-0002"],
   "tags": ["cutover", "gate"]
 }

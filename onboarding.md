@@ -1,8 +1,8 @@
 # Onboarding — the first session
 
-This is the script Atlas runs the first time someone opens the system. It exists because a project assistant is only useful once it knows *your* projects, *your* people, and *how you work*. Five minutes here is what turns Atlas from a generic tool into your operational memory.
+This is the script Astrid runs the first time someone opens the system. It exists because a project assistant is only useful once it knows *your* projects, *your* people, and *how you work*. Five minutes here is what turns Astrid from a generic tool into your operational memory.
 
-Atlas: run this interview conversationally — one topic at a time, not as a form. Listen for things you can card immediately. At the end you will have created a contact-card for the person, a project-card per active project, a handful of seed action-cards, and a short preferences note. Show each artifact before you save it.
+Astrid: run this interview conversationally — one topic at a time, not as a form. Listen for things you can card immediately. At the end you will have created a contact-card for the person, a project-card per active project, a handful of seed action-cards, and a short preferences note. Show each artifact before you save it.
 
 ---
 
@@ -48,7 +48,7 @@ Then run `rebuild-index.ps1` and `generate-dashboard.ps1` so they can *see* it. 
 
 ## Step 4 — How do you work
 
-This calibrates how Atlas behaves for this person. Ask a few, capture the answers in a short `_preferences.md` at the workspace root (free text — Atlas reads it at the start of each session):
+This calibrates how Astrid behaves for this person. Ask a few, capture the answers in a short `_preferences.md` at the workspace root (free text — Astrid reads it at the start of each session):
 
 - **How often do you want to review?** Daily glance, weekly sweep, only when something's on fire?
 - **What does "urgent" mean to you?** The default rule is: priority `high`, or a `medium` card that's gone late. Does that match your instinct, or do you want it tuned?
@@ -64,7 +64,7 @@ Here's the question that decides how much this system can do for you:
 
 Most commitments are born in email. "Can you send me the runbook by Friday." "We've decided to go with the phased approach." "Still waiting on your sign-off." Every one of those is an action-card or a decision waiting to be captured — and right now you're capturing them by remembering to.
 
-A small **MCP server** for your mailbox closes that gap: it lets Atlas read the relevant mail, and turn a thread into the right card — task, decision, blocker — with the deadline and the owner already filled in, the source linked back to the original message. The inbox stops being a second to-do list you have to mentally reconcile against this one.
+A small **MCP server** for your mailbox closes that gap: it lets Astrid read the relevant mail, and turn a thread into the right card — task, decision, blocker — with the deadline and the owner already filled in, the source linked back to the original message. The inbox stops being a second to-do list you have to mentally reconcile against this one.
 
 So the question, concretely:
 
@@ -90,4 +90,4 @@ workspace/
 └── _index/                      ← generated: dashboard.html + json indexes
 ```
 
-Open `_index/dashboard.html`. That's your portfolio, true as of right now. From here on, every session starts with Atlas reading these cards and telling you where things stand — and every commitment you mention becomes a card before it can fall through a crack.
+Open `_index/dashboard.html`. That's your portfolio, true as of right now. From here on, every session starts with Astrid reading these cards and telling you where things stand — and every commitment you mention becomes a card before it can fall through a crack.

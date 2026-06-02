@@ -19,7 +19,8 @@
 
 [CmdletBinding()]
 param(
-    [string]$Root = (Get-Location).Path
+    [string]$Root = (Get-Location).Path,
+    [int]$StaleDays = 14   # an open action untouched longer than this is flagged 'stale' (stagnation)
 )
 
 $ErrorActionPreference = 'Stop'
@@ -97,6 +98,18 @@ Get-ChildItem -Path $rootAbs -Recurse -Filter '*.json' -File |
             Write-Verbose "  flags updated: $($card.id)  late=$late urgent=$urgent"
         }
 
+        # Stagnation: how long since the card was last touched, and is it stalling?
+        $daysIdle = $null
+        $stale = $false
+        $lastTouch = if ($card.updated) { $card.updated } elseif ($card.created) { $card.created } else { $null }
+        if ($lastTouch) {
+            try {
+                $touchDate = ([datetime]$lastTouch).Date
+                $daysIdle = [int]($today - $touchDate).TotalDays
+                if ($card.status -in @('TODO','DOING','WAIT','BLOCKED') -and $daysIdle -gt $StaleDays) { $stale = $true }
+            } catch { }
+        }
+
         $entry = [pscustomobject]@{
             id          = $card.id
             title       = $card.title
@@ -104,6 +117,8 @@ Get-ChildItem -Path $rootAbs -Recurse -Filter '*.json' -File |
             priority    = $card.priority
             late        = $late
             urgent      = $urgent
+            stale       = $stale
+            days_idle   = $daysIdle
             assignee    = if ($card.assignee) { "$($card.assignee.party) / $($card.assignee.person)" } else { $null }
             deadline    = if ($card.deadline) { $card.deadline.date } else { $null }
             project     = if ($card.project) { "$($card.project.customer_code)/$($card.project.project_code)" } else { $null }
@@ -138,19 +153,42 @@ Get-ChildItem -Path $rootAbs -Recurse -Filter 'project.json' -File |
             return
         }
 
+        # Reporting cadence: when is this project next due for a steering report?
+        $repCadence = $null; $repLast = $null; $repNextDue = $null; $repOverdue = $false; $daysSinceReport = $null
+        if ($proj.reporting) {
+            $repCadence = $proj.reporting.cadence
+            $repLast    = $proj.reporting.last_reported
+            $intervalDays = switch ($repCadence) { 'weekly' {7} 'fortnightly' {14} 'monthly' {30} 'quarterly' {91} default {$null} }
+            if ($repLast) {
+                try { $lastDate = [datetime]::ParseExact($repLast,'yyyy-MM-dd',$null).Date; $daysSinceReport = [int]($today - $lastDate).TotalDays } catch {}
+            }
+            if ($proj.reporting.next_due) { $repNextDue = $proj.reporting.next_due }
+            elseif ($repLast -and $intervalDays) {
+                try { $repNextDue = ([datetime]::ParseExact($repLast,'yyyy-MM-dd',$null).Date.AddDays($intervalDays)).ToString('yyyy-MM-dd') } catch {}
+            }
+            if ($repNextDue) {
+                try { if ([datetime]::ParseExact($repNextDue,'yyyy-MM-dd',$null).Date -lt $today) { $repOverdue = $true } } catch {}
+            } elseif ($intervalDays -and -not $repLast) { $repOverdue = $true }  # cadence set, never reported
+        }
+
         $entry = [pscustomobject]@{
-            id              = $proj.id
-            title           = $proj.title
-            status          = $proj.status
-            health_level    = if ($proj.health) { $proj.health.level } else { $null }
-            health_since    = if ($proj.health) { $proj.health.since } else { $null }
-            customer        = if ($proj.customer) { "$($proj.customer.code) / $($proj.customer.name)" } else { $null }
-            start_date      = if ($proj.timeline) { $proj.timeline.start_date } else { $null }
-            target_date     = if ($proj.timeline) { $proj.timeline.target_date } else { $null }
-            go_live_planned = if ($proj.timeline) { $proj.timeline.go_live_planned } else { $null }
-            classification  = $proj.classification
-            risk_count      = if ($proj.risks) { @($proj.risks).Count } else { 0 }
-            file            = $projPath.Replace($rootAbs + [IO.Path]::DirectorySeparatorChar, '').Replace('\', '/')
+            id                  = $proj.id
+            title               = $proj.title
+            status              = $proj.status
+            health_level        = if ($proj.health) { $proj.health.level } else { $null }
+            health_since        = if ($proj.health) { $proj.health.since } else { $null }
+            customer            = if ($proj.customer) { "$($proj.customer.code) / $($proj.customer.name)" } else { $null }
+            start_date          = if ($proj.timeline) { $proj.timeline.start_date } else { $null }
+            target_date         = if ($proj.timeline) { $proj.timeline.target_date } else { $null }
+            go_live_planned     = if ($proj.timeline) { $proj.timeline.go_live_planned } else { $null }
+            classification      = $proj.classification
+            report_cadence      = $repCadence
+            last_reported       = $repLast
+            report_next_due     = $repNextDue
+            reporting_overdue   = $repOverdue
+            days_since_reported = $daysSinceReport
+            risk_count          = if ($proj.risks) { @($proj.risks).Count } else { 0 }
+            file                = $projPath.Replace($rootAbs + [IO.Path]::DirectorySeparatorChar, '').Replace('\', '/')
         }
         $globalProjects += $entry
         Write-Verbose "Project-card indexed: $($proj.id)"
@@ -257,7 +295,9 @@ Write-Host "Done."
 Write-Host "  Action-cards :  $($globalActions.Count) (open=$($openActions.Count), done=$($doneActions.Count))"
 Write-Host "     late   = $(@($globalActions | Where-Object late).Count)"
 Write-Host "     urgent = $(@($globalActions | Where-Object urgent).Count)"
+Write-Host "     stale  = $(@($globalActions | Where-Object stale).Count)  (idle > $StaleDays days)"
 Write-Host "  Project-cards:  $($globalProjects.Count)"
+Write-Host "     reporting overdue = $(@($globalProjects | Where-Object reporting_overdue).Count)"
 Write-Host "  Contact-cards:  $($globalContacts.Count)"
 foreach ($t in $otherTypes) {
     $label = $t.folder.PadRight(13)

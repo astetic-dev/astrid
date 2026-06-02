@@ -1,8 +1,8 @@
 # Preferences
 
-Atlas reads this file at the start of every session. It captures how *you* like to
-work, so Atlas behaves like your assistant and not a generic one. This is the sample
-workspace's version (for "Sarah Chen"); during onboarding Atlas writes your own.
+Astrid reads this file at the start of every session. It captures how *you* like to
+work, so Astrid behaves like your assistant and not a generic one. This is the sample
+workspace's version (for "Sarah Chen"); during onboarding Astrid writes your own.
 Free text — edit it whenever your preferences change.
 
 ## Review cadence

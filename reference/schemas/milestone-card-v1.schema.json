@@ -52,6 +52,12 @@
       "default": [],
       "description": "Action-cards that must complete for this milestone to be reached."
     },
+    "issues": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^ISS-[A-Z]{2,10}-[A-Z]{2,7}-[0-9]{4}$"},
+      "default": [],
+      "description": "Issue-card ids that threaten this milestone — the milestone → issue → action chain (the issues' own action_cards[] carry the work)."
+    },
     "updated": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date this card was last touched."},
     "tags": {"type": "array", "items": {"type": "string"}, "default": []}
   },

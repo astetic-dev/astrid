@@ -1,0 +1,47 @@
+{
+  "schema_version": 2,
+  "id": "SC-ACME-CLOUD-0007",
+  "title": "Trim the OrderHub rollback to fit the 4-hour maintenance window",
+  "status": "TODO",
+  "type": "task",
+  "priority": "high",
+  "project": {
+    "user_code": "SC",
+    "customer_code": "ACME",
+    "project_code": "CLOUD",
+    "full_name": "Acme Logistics — Cloud platform migration"
+  },
+  "assignee": {
+    "party": "internal",
+    "person": "Sarah Chen",
+    "contact_id": "CONTACT-INTERNAL-sarah-chen"
+  },
+  "reporter": {
+    "party": "internal",
+    "person": "Sarah Chen",
+    "contact_id": "CONTACT-INTERNAL-sarah-chen"
+  },
+  "deadline": {
+    "date": "2026-06-16",
+    "text": "before the OrderHub cutover can be scheduled"
+  },
+  "created": "2026-05-31T11:00:00Z",
+  "updated": "2026-05-31T11:00:00Z",
+  "sources": [
+    {
+      "type": "issue",
+      "ref": "ISS-ACME-CLOUD-0002",
+      "note": "the issue this action resolves"
+    }
+  ],
+  "acceptance_criteria": [
+    "Rollback rehearsed end-to-end within the 4-hour window",
+    "Updated steps folded into the runbook deliverable (DLV-ACME-CLOUD-001)"
+  ],
+  "tags": [
+    "rollback",
+    "cutover"
+  ],
+  "late": false,
+  "urgent": true
+}

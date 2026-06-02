@@ -64,6 +64,12 @@
     { "description": "Data-center contract auto-renews on 2026-12-31 if not decommissioned in time.", "mitigation": "Hard backstop date tracked on the monitoring card.", "raised": "2026-02-20" }
   ],
   "classification": "M",
+  "reporting": {
+    "cadence": "monthly",
+    "audience": "steering group",
+    "last_reported": "2026-05-01",
+    "next_due": null
+  },
   "references": {
     "wiki": null,
     "issue_epic": "ACLD-100",

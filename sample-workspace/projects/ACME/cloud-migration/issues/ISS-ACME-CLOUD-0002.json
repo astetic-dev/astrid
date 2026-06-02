@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "ISS-ACME-CLOUD-0002",
+  "project_id": "ACME-CLOUD",
+  "title": "OrderHub rollback exceeds the maintenance window in dry-run",
+  "type": "defect",
+  "severity": "high",
+  "priority": "high",
+  "status": "open",
+  "reporter": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "assignee": { "party": "internal", "person": "Sarah Chen", "contact_id": "CONTACT-INTERNAL-sarah-chen" },
+  "environment": "Northwind test env, OrderHub dry-run 2026-05-30",
+  "description": "In the first end-to-end dry-run, the OrderHub rollback procedure took ~5.5 hours — longer than the 4-hour maintenance window the runbook commits to. A rollback that doesn't fit the window means we cannot safely schedule the cutover.",
+  "steps_to_reproduce": [
+    "Run the OrderHub cutover dry-run against the Northwind test env",
+    "Trigger the documented rollback",
+    "Measure elapsed time to a fully restored on-prem state"
+  ],
+  "expected": "Rollback completes within the 4-hour maintenance window.",
+  "actual": "Rollback took ~5.5 hours.",
+  "resolution": null,
+  "resolution_note": null,
+  "duplicate_of": null,
+  "action_cards": ["SC-ACME-CLOUD-0007"],
+  "sources": [
+    { "type": "deliverable", "ref": "DLV-ACME-CLOUD-001", "note": "issue found while validating the runbook deliverable" }
+  ],
+  "external_ref": null,
+  "raised": "2026-05-31",
+  "resolved": null,
+  "tags": ["cutover", "rollback", "blocking"]
+}

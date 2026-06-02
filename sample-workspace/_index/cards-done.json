@@ -6,6 +6,8 @@
     "priority": "medium",
     "late": false,
     "urgent": false,
+    "stale": false,
+    "days_idle": 26,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-05-08",
     "project": "ACME/CLOUD",

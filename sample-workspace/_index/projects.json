@@ -10,6 +10,11 @@
     "target_date": "2026-12-15",
     "go_live_planned": "2026-11-15",
     "classification": "M",
+    "report_cadence": "monthly",
+    "last_reported": "2026-05-01",
+    "report_next_due": "2026-05-31",
+    "reporting_overdue": true,
+    "days_since_reported": 32,
     "risk_count": 2,
     "file": "projects/ACME/cloud-migration/project.json"
   }

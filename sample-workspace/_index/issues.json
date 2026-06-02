@@ -11,5 +11,18 @@
     "resolution": null,
     "raised": "2026-05-28",
     "resolved": null
+  },
+  {
+    "id": "ISS-ACME-CLOUD-0002",
+    "project_id": "ACME-CLOUD",
+    "title": "OrderHub rollback exceeds the maintenance window in dry-run",
+    "status": "open",
+    "file": "projects/ACME/cloud-migration/issues/ISS-ACME-CLOUD-0002.json",
+    "severity": "high",
+    "priority": "high",
+    "type": "defect",
+    "resolution": null,
+    "raised": "2026-05-31",
+    "resolved": null
   }
 ]

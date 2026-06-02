@@ -18,5 +18,6 @@
   ],
   "sign_off": null,
   "action_cards": ["SC-ACME-CLOUD-0002"],
+  "issues": ["ISS-ACME-CLOUD-0002"],
   "tags": ["runbook", "cutover"]
 }

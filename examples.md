@@ -1,6 +1,6 @@
-# Examples — Atlas in action
+# Examples — Astrid in action
 
-Three short sessions, lightly abridged, using the bundled `sample-workspace/` (the Acme Logistics cloud migration). They show the texture of working with Atlas: read-first, capture-as-you-go, currency over completeness.
+Three short sessions, lightly abridged, using the bundled `sample-workspace/` (the Acme Logistics cloud migration). They show the texture of working with Astrid: read-first, capture-as-you-go, currency over completeness.
 
 ---
 
@@ -8,7 +8,7 @@ Three short sessions, lightly abridged, using the bundled `sample-workspace/` (t
 
 > **You:** morning, where are things?
 
-**Atlas:** *(reads the project-cards and `_index/cards-open.json` first, then leads with what needs attention)*
+**Astrid:** *(reads the project-cards and `_index/cards-open.json` first, then leads with what needs attention)*
 
 Good morning. One project active — **Acme Logistics — Cloud platform migration**, status execution, health **yellow** since 2026-05-20. Here's where attention is needed:
 
@@ -25,11 +25,11 @@ So: the sign-off is the lever. Everything points at it.
 
 > **You:** yeah. I'll chase Amir. Also I decided last night — we're going phased, OrderHub first.
 
-**Atlas:** Good — that resolves 0003. Before I close it: the deliverable was a *recorded decision with the decision-maker named*. You're the approver on this project; the sponsor (Mark) is the decision-maker. Do you want this logged as **your recommendation** going to Mark at the 2026-06-10 steering (his call to ratify), or has Mark already signed off on phased?
+**Astrid:** Good — that resolves 0003. Before I close it: the deliverable was a *recorded decision with the decision-maker named*. You're the approver on this project; the sponsor (Mark) is the decision-maker. Do you want this logged as **your recommendation** going to Mark at the 2026-06-10 steering (his call to ratify), or has Mark already signed off on phased?
 
 > **You:** my recommendation, Mark hasn't seen it yet.
 
-**Atlas:** Then I'll keep 0003 open but move it to DOING, and set its `latest_update` to:
+**Astrid:** Then I'll keep 0003 open but move it to DOING, and set its `latest_update` to:
 
 > *2026-06-02 — Decision drafted: recommend phased (OrderHub first, soak, then Billing + Reporting). Goes to Mark at the 06-10 steering for ratification.*
 
@@ -45,7 +45,7 @@ It closes once Mark ratifies it on the steering meeting-card. I'll append the de
 
 > **You:** just had the vendor sync. Amir confirmed the backup config passed their review, written sign-off coming tomorrow. He also flagged their networking guy is on leave next week so any change requests will be slow. And we agreed I'd send them the draft runbook by the 13th.
 
-**Atlas:** Three things in there. Let me card them.
+**Astrid:** Three things in there. Let me card them.
 
 **1 — Meeting-card** (the record): `MTG-ACME-CLOUD-2026-06-02-01`, vendor-call, attendees you + Amir. Decision logged: *"Northwind backup config passed review; written landing-zone sign-off due 2026-06-03."* I'll link it to the cards below.
 
@@ -60,9 +60,9 @@ I'll leave it WAIT until the written sign-off actually lands tomorrow — verbal
 
 > **You:** skip the monitoring one, I'll remember it for a week. Do the rest.
 
-**Atlas:** Done — I didn't card the leave note, so flag me if it should be tracked after all. Saving: the meeting-card, the 0001 update, and the deadline on 0002. I'll list 0002 in the meeting-card's `action_cards_created`… actually it predates the meeting, so I'll put it under a `relates` note instead. Rebuilding the index now so the dashboard reflects it.
+**Astrid:** Done — I didn't card the leave note, so flag me if it should be tracked after all. Saving: the meeting-card, the 0001 update, and the deadline on 0002. I'll list 0002 in the meeting-card's `action_cards_created`… actually it predates the meeting, so I'll put it under a `relates` note instead. Rebuilding the index now so the dashboard reflects it.
 
-*(Notice: Atlas defaulted to capturing, took the "skip it" without argument, said out loud what it chose not to card, and kept 0001 honest — verbal ≠ done.)*
+*(Notice: Astrid defaulted to capturing, took the "skip it" without argument, said out loud what it chose not to card, and kept 0001 honest — verbal ≠ done.)*
 
 ---
 
@@ -70,8 +70,8 @@ I'll leave it WAIT until the written sign-off actually lands tomorrow — verbal
 
 > **You:** that vendor sync went badly actually. I steamrolled Amir on the leave thing and I don't think I handled it well. can you help me figure out what I did wrong?
 
-**Atlas:** That's reflection on *how you ran the room* — which is exactly what I don't do, and exactly what **Miles** (the meeting reflection coach in this same methodology) is built for. I've recorded the *facts* of the meeting in `MTG-ACME-CLOUD-2026-06-02-01`; that's the same artifact Miles reads.
+**Astrid:** That's reflection on *how you ran the room* — which is exactly what I don't do, and exactly what **Miles** (the meeting reflection coach in this same methodology) is built for. I've recorded the *facts* of the meeting in `MTG-ACME-CLOUD-2026-06-02-01`; that's the same artifact Miles reads.
 
 If you open this workspace with Miles, he'll start from your `user_intent` for that meeting and work the reflection — what you were protecting when you steamrolled, what the alternative move was, anchored in what actually happened. I keep the record; he works the mirror. Want me to make sure the meeting-card has enough factual detail for him to start from?
 
-*(Atlas hands off cleanly instead of doing a shallow version of coaching.)*
+*(Astrid hands off cleanly instead of doing a shallow version of coaching.)*

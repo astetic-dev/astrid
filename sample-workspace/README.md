@@ -15,7 +15,7 @@ One project — **ACME-CLOUD**, migrating Acme's three remaining on-prem applica
 | SC-ACME-CLOUD-0005 | decision | DONE | a closed card — drops out of the open dashboard |
 | SC-ACME-CLOUD-0006 | task | DOING | spawned from an issue (`sources` → `ISS-ACME-CLOUD-0001`) — the issue→action loop |
 
-Plus a **meeting-card** (`MTG-ACME-CLOUD-2026-05-26-01`) showing the factual layer Atlas writes, three **contact-cards** in `_contacts/`, a `_preferences.md` (how "Sarah" likes to work), and **one of each extended card** so the register is visible end-to-end:
+Plus a **meeting-card** (`MTG-ACME-CLOUD-2026-05-26-01`) showing the factual layer Astrid writes, three **contact-cards** in `_contacts/`, a `_preferences.md` (how "Sarah" likes to work), and **one of each extended card** so the register is visible end-to-end:
 
 | Extended card | Id | Shows off |
 |---|---|---|

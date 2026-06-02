@@ -37,12 +37,24 @@ if (-not (Test-Path (Join-Path $indexDir 'cards-open.json'))) {
 }
 $cards    = Read-Index 'cards-open.json'
 $projects = Read-Index 'projects.json'
+
+# Register cards: load the FULL card files (not just the index summary) so the
+# dashboard can render rich, drill-down detail with clickable linked cards.
+function Load-RegisterFull($indexName) {
+  $full = @()
+  foreach ($it in (Read-Index $indexName)) {
+    if (-not $it.file) { continue }
+    $fp = Join-Path $rootAbs ($it.file -replace '/', [string][IO.Path]::DirectorySeparatorChar)
+    if (Test-Path $fp) { try { $full += (Get-Content $fp -Raw -Encoding utf8 | ConvertFrom-Json) } catch {} }
+  }
+  return $full
+}
 $register = @{
-  risks        = Read-Index 'risks.json'
-  issues       = Read-Index 'issues.json'
-  decisions    = Read-Index 'decisions.json'
-  milestones   = Read-Index 'milestones.json'
-  deliverables = Read-Index 'deliverables.json'
+  risks        = Load-RegisterFull 'risks.json'
+  issues       = Load-RegisterFull 'issues.json'
+  decisions    = Load-RegisterFull 'decisions.json'
+  milestones   = Load-RegisterFull 'milestones.json'
+  deliverables = Load-RegisterFull 'deliverables.json'
 }
 
 # ---- 2. Enrich each card with body.md + log.jsonl + sidecar JSON fields ----
@@ -82,7 +94,7 @@ foreach ($c in $cards) {
 
   $enriched += [pscustomobject]@{
     id = $c.id; title = $c.title; status = $c.status; priority = $extra.priority; type = $extra.type
-    late = $c.late; urgent = $c.urgent; assignee = $c.assignee; reporter = $extra.reporter
+    late = $c.late; urgent = $c.urgent; stale = $c.stale; days_idle = $c.days_idle; assignee = $c.assignee; reporter = $extra.reporter
     deadline = $c.deadline; deadline_text = $extra.deadline_text; project = $c.project; file = $c.file
     body = $body; log = $logEntries; sources = $extra.sources; acceptance_criteria = $extra.acceptance_criteria
     tags = $extra.tags; created = $extra.created; updated = $extra.updated; latest_update = $extra.latest_update
@@ -274,6 +286,20 @@ $template = @'
   .reg-item .rtitle { color: var(--text-on-light); font-size: 13px; line-height: 1.35; margin: 2px 0; }
   .reg-item .rmeta { font-size: 11px; color: var(--text-on-light-dim); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .reg-item .rstatus { text-transform: uppercase; letter-spacing: .5px; font-size: 9px; background: rgba(0,0,0,.06); padding: 1px 6px; border-radius: 3px; }
+  .reg-item.clickable { cursor: pointer; border-radius: var(--radius-sm); margin: 0 -8px; padding: 8px; transition: background var(--transition); }
+  .reg-item.clickable:hover { background: var(--normal-tint); }
+  .chip { display: inline-block; font-family: 'Consolas', monospace; font-size: 11px; background: var(--normal-tint); color: var(--primary); border: 1px solid #d4dcf5; border-radius: 4px; padding: 1px 7px; margin: 2px 4px 2px 0; cursor: pointer; transition: all var(--transition); }
+  .chip:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .chip.plain { cursor: default; color: var(--text-on-light-dim); background: var(--wait-tint); border-color: var(--border-on-light); }
+  .modal-linkrow { margin: 8px 0; }
+  .modal-linkrow .lk-label { display: block; color: var(--text-on-light-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+  .report-badge { font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
+  .report-ok { background: #e6f4ea; color: #137333; }
+  .report-due { background: var(--urgent-tint); color: var(--accent); }
+  .detail-report { color: var(--text-on-dark-dim); font-size: 13px; margin-top: 8px; display: flex; gap: 10px; align-items: center; }
+  .detail-report .report-due { background: rgba(225,29,72,.22); color: var(--accent-soft); }
+  .detail-report .report-ok { background: rgba(19,115,51,.22); color: #8fe0a6; }
+  .card .meta .stale { color: #b45309; font-weight: 600; }
   footer { text-align: center; padding: 32px; font-size: 12px; color: var(--text-on-dark-faint); }
   footer code { background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', monospace; }
 </style>
@@ -299,7 +325,7 @@ $template = @'
   <section class="view hidden" id="view-detail">
     <div class="detail-header">
       <button class="back-btn" onclick="showGrid()">&larr; Back to projects</button>
-      <div class="detail-title"><h2 id="detail-title"></h2><div class="customer" id="detail-customer"></div></div>
+      <div class="detail-title"><h2 id="detail-title"></h2><div class="customer" id="detail-customer"></div><div class="detail-report" id="detail-report"></div></div>
     </div>
     <div class="columns">
       <div class="col col-urgent"><div class="col-header"><h3>Urgent / Late</h3><span class="count" id="count-urgent">0</span></div><div id="col-urgent"></div></div>
@@ -326,6 +352,11 @@ document.getElementById('gen-date').textContent = '__GEN_DATE__';
 document.getElementById('total-info').textContent = CARDS.length + ' open cards';
 
 function projectIdFromCard(c) { return c.project ? c.project.replace('/', '-') : null; }
+function reportBadge(p) {
+  if (p.reporting_overdue) return '<span class="report-badge report-due">report due</span>';
+  if (p.last_reported) return `<span class="report-badge report-ok">reported ${escapeHtml(p.last_reported)}</span>`;
+  return '';
+}
 function classify(c) {
   if (c.urgent || c.late) return 'urgent';
   if (['WAIT', 'PLAN', 'BLOCKED'].includes(c.status)) return 'wait';
@@ -374,7 +405,7 @@ function renderProjectGrid() {
       <div class="project-card" onclick="showProject('${p.id}')">
         <div class="arrow">&rarr;</div>
         <h2>${escapeHtml(p.title)}</h2>
-        <div class="customer">${escapeHtml(p.customer || p.id)}</div>
+        <div class="customer">${escapeHtml(p.customer || p.id)} ${reportBadge(p)}</div>
         <div class="stats">
           <div class="stat stat-urgent"><div class="n">${c.urgent}</div><div class="lbl">Urgent</div></div>
           <div class="stat stat-normal"><div class="n">${c.normal}</div><div class="lbl">Normal</div></div>
@@ -387,6 +418,7 @@ function renderCard(c) {
   const flags = [];
   if (c.urgent) flags.push('🔥');
   if (c.late) flags.push('⚠');
+  if (c.stale) flags.push('💤');
   const deadlineHtml = c.deadline ? `<span class="deadline ${c.late ? 'late' : ''}">${c.deadline}</span>` : '';
   const eigHtml = c.assignee ? `<span>👤 ${escapeHtml(shortName(c.assignee))}</span>` : '';
   return `
@@ -396,12 +428,13 @@ function renderCard(c) {
       <div class="meta">${deadlineHtml}${eigHtml}<span class="status">${c.status}</span>${flags.length ? `<span class="flags">${flags.join(' ')}</span>` : ''}</div>
     </div>`;
 }
+function regTitleOf(it) { return it.title || it.name || ''; }
 function renderRegister(pid) {
   const el = document.getElementById('register');
   const groups = [
     { label: 'Risks',        items: (REGISTER.risks        || []).filter(x => x.project_id === pid), meta: r => [ (r.probability && r.impact) ? `${r.probability}×${r.impact}` : '', (r.score != null) ? 'score ' + r.score : '', r.response ].filter(Boolean).join(' · ') },
     { label: 'Issues',       items: (REGISTER.issues       || []).filter(x => x.project_id === pid), meta: r => [ r.severity ? 'sev ' + r.severity : '', r.priority ? 'prio ' + r.priority : '', r.type ].filter(Boolean).join(' · ') },
-    { label: 'Decisions',    items: (REGISTER.decisions    || []).filter(x => x.project_id === pid), meta: r => [ r.date ].filter(Boolean).join(' · ') },
+    { label: 'Decisions',    items: (REGISTER.decisions    || []).filter(x => x.project_id === pid), meta: r => [ r.cynefin_domain, r.date ].filter(Boolean).join(' · ') },
     { label: 'Milestones',   items: (REGISTER.milestones   || []).filter(x => x.project_id === pid), meta: r => [ r.target_date ? 'target ' + r.target_date : '', (r.gate === true) ? 'gate' : '' ].filter(Boolean).join(' · ') },
     { label: 'Deliverables', items: (REGISTER.deliverables || []).filter(x => x.project_id === pid), meta: r => [ r.due_date ? 'due ' + r.due_date : '' ].filter(Boolean).join(' · ') }
   ].filter(g => g.items.length);
@@ -409,15 +442,87 @@ function renderRegister(pid) {
   el.classList.remove('hidden');
   el.innerHTML = '<h3 class="register-title">Project register</h3><div class="reg-grid">' + groups.map(g => `
     <div class="reg-group"><h4>${g.label}<span class="cnt">${g.items.length}</span></h4>
-      ${g.items.map(it => { const m = g.meta(it); return `<div class="reg-item"><div class="rid">${escapeHtml(it.id)}</div><div class="rtitle">${escapeHtml(it.title || '')}</div><div class="rmeta"><span class="rstatus">${escapeHtml(it.status || '')}</span>${m ? `<span>${escapeHtml(m)}</span>` : ''}</div></div>`; }).join('')}
+      ${g.items.map(it => { const m = g.meta(it); return `<div class="reg-item clickable" onclick="openAny('${it.id}')"><div class="rid">${escapeHtml(it.id)}</div><div class="rtitle">${escapeHtml(regTitleOf(it))}</div><div class="rmeta"><span class="rstatus">${escapeHtml(it.status || '')}</span>${m ? `<span>${escapeHtml(m)}</span>` : ''}</div></div>`; }).join('')}
     </div>`).join('') + '</div>';
 }
+
+// ----- drill-down navigation across all card types -----
+function findRegister(id) {
+  for (const k of Object.keys(REGISTER)) { const f = (REGISTER[k] || []).find(x => x.id === id); if (f) return f; }
+  return null;
+}
+function openAny(id) {
+  if (!id) return;
+  if (/^(ISS|RISK|DEC|MS|DLV)-/.test(id)) return openRegister(id);
+  if (/^MTG-/.test(id)) return;               // meetings have no modal here
+  if (CARDS.find(c => c.id === id)) return openCard(id);   // action-card
+  // action-card not in the open set (e.g. DONE) — show a stub
+  alert(id + ' is not in the open set (it may be done or in another project).');
+}
+function chip(id) { return id ? `<span class="chip" onclick="event.stopPropagation();openAny('${escapeAttr(id)}')">${escapeHtml(id)}</span>` : ''; }
+function chipsRow(label, arr) {
+  const list = (arr || []).filter(Boolean);
+  if (!list.length) return '';
+  return `<div class="modal-linkrow"><span class="lk-label">${label}</span>${list.map(chip).join('')}</div>`;
+}
+function openRegister(id) {
+  const c = findRegister(id);
+  if (!c) return;
+  const kind = id.split('-')[0];
+  const titles = { RISK: 'Risk', ISS: 'Issue', DEC: 'Decision', MS: 'Milestone', DLV: 'Deliverable' };
+  const ownerStr = o => o ? [o.party, o.person].filter(Boolean).join(' / ') : '';
+  let gridRows = [['Type', titles[kind] || kind], ['Status', c.status || '—']];
+  let prose = '', links = '';
+
+  if (kind === 'RISK') {
+    gridRows.push(['Probability × Impact', [c.probability, c.impact].filter(Boolean).join(' × ') + (c.score != null ? `  (score ${c.score})` : '')]);
+    gridRows.push(['Response', c.response || '—'], ['Owner', ownerStr(c.owner) || '—'], ['Raised', c.raised || '—'], ['Review due', c.review_due || '—']);
+    prose = section('Description', c.description) + section('Mitigation', c.mitigation) + section('Trigger', c.trigger) + section('Residual', c.residual);
+    links = chipsRow('Mitigated by (actions)', c.mitigation_action_cards) + chipsRow('Realized as issue', c.realized_as_issue ? [c.realized_as_issue] : []);
+  } else if (kind === 'ISS') {
+    gridRows.push(['Severity (technical)', c.severity || '—'], ['Priority (business)', c.priority || '—'], ['Kind', c.type || '—'], ['Environment', c.environment || '—'], ['Reporter', ownerStr(c.reporter) || '—'], ['Raised', c.raised || '—'], ['Resolution', c.resolution || '—']);
+    prose = section('Description', c.description) + (c.steps_to_reproduce && c.steps_to_reproduce.length ? `<div class="modal-section"><h3>Steps to reproduce</h3><ul>${c.steps_to_reproduce.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul></div>` : '') + section('Expected', c.expected) + section('Actual', c.actual);
+    links = chipsRow('Work (actions)', c.action_cards) + chipsRow('Duplicate of', c.duplicate_of ? [c.duplicate_of] : []);
+  } else if (kind === 'DEC') {
+    gridRows.push(['Date', c.date || '—'], ['Cynefin domain', c.cynefin_domain || '—'], ['Decision-makers', (c.decision_makers || []).map(ownerStr).filter(Boolean).join(', ') || '—']);
+    prose = section('Context', c.context) + section('Decision', c.decision) + section('Consequences', c.consequences)
+      + ((c.options_considered && c.options_considered.length) ? `<div class="modal-section"><h3>Options considered</h3>${c.options_considered.map(o => `<div class="source"><strong>${escapeHtml(o.option)}${o.chosen ? ' ✓' : ''}</strong>${(o.pros||[]).length ? '<br>+ ' + o.pros.map(escapeHtml).join('<br>+ ') : ''}${(o.cons||[]).length ? '<br>− ' + o.cons.map(escapeHtml).join('<br>− ') : ''}</div>`).join('')}</div>` : '');
+    links = chipsRow('Resolves decision-action', c.resolves_action_card ? [c.resolves_action_card] : []) + chipsRow('Drives (actions)', c.action_cards) + chipsRow('Decided at meeting', c.decided_at_meeting ? [c.decided_at_meeting] : []) + chipsRow('Supersedes', c.supersedes) + chipsRow('Superseded by', c.superseded_by ? [c.superseded_by] : []);
+  } else if (kind === 'MS') {
+    gridRows.push(['Target', c.target_date || '—'], ['Baseline', c.baseline_date || '—'], ['Actual', c.actual_date || '—'], ['Gate', c.gate ? 'yes' : 'no'], ['Owner', ownerStr(c.owner) || '—']);
+    prose = section('Description', c.description) + ((c.gate_criteria && c.gate_criteria.length) ? `<div class="modal-section"><h3>Gate criteria</h3><ul>${c.gate_criteria.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>` : '');
+    links = chipsRow('Deliverables', c.deliverables) + chipsRow('Threatened by (issues)', c.issues) + chipsRow('Actions', c.action_cards);
+  } else if (kind === 'DLV') {
+    gridRows.push(['Format', c.format || '—'], ['Owner', ownerStr(c.owner) || '—'], ['Recipient', ownerStr(c.recipient) || '—'], ['Due', c.due_date || '—'], ['Sign-off', c.sign_off ? `${escapeHtml(c.sign_off.by)} (${c.sign_off.date})` : '—']);
+    prose = section('Description', c.description) + ((c.acceptance_criteria && c.acceptance_criteria.length) ? `<div class="modal-section"><h3>Acceptance criteria</h3><ul>${c.acceptance_criteria.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>` : '') + section('Rejection note', c.rejection_note);
+    links = chipsRow('Rolls up to milestone', c.milestone_id ? [c.milestone_id] : []) + chipsRow('Issues against it', c.issues) + chipsRow('Produced by (actions)', c.action_cards);
+  }
+
+  const grid = `<div class="modal-grid">${gridRows.map(r => `<div class="lbl">${escapeHtml(r[0])}</div><div class="val">${typeof r[1] === 'string' ? escapeHtml(r[1]) : r[1]}</div>`).join('')}</div>`;
+  const linksBlock = links ? `<div class="modal-section"><h3>Linked cards</h3>${links}</div>` : '';
+  document.getElementById('modal').innerHTML = `
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-id">${escapeHtml(c.id)}</div>
+      <h2 class="modal-title">${escapeHtml(regTitleOf(c))}</h2>
+      <div class="modal-badges"><span class="badge badge-status">${escapeHtml(c.status || '')}</span><span class="badge">${escapeHtml(titles[kind] || kind)}</span></div>
+    </div>
+    <div class="modal-body">${grid}${linksBlock}${prose}</div>`;
+  document.getElementById('overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function section(title, text) { return text ? `<div class="modal-section"><h3>${escapeHtml(title)}</h3><div class="body-md">${renderBodyMd(text)}</div></div>` : ''; }
 
 function showProject(pid) {
   const project = PROJECTS_META.find(p => p.id === pid);
   if (!project) return;
   document.getElementById('detail-title').textContent = project.title;
   document.getElementById('detail-customer').textContent = project.customer || pid;
+  const repBadge = reportBadge(project);
+  const repInfo = project.report_cadence
+    ? `<span>reporting: ${escapeHtml(project.report_cadence)}${project.days_since_reported != null ? ` · last reported ${project.days_since_reported}d ago` : ' · never reported'}${project.report_next_due ? ` · next due ${escapeHtml(project.report_next_due)}` : ''}</span>`
+    : '';
+  document.getElementById('detail-report').innerHTML = (repBadge || repInfo) ? (repBadge + repInfo) : '';
   const my = CARDS.filter(c => projectIdFromCard(c) === pid);
   const buckets = { urgent: [], normal: [], wait: [] };
   for (const c of my) buckets[classify(c)].push(c);
@@ -462,6 +567,7 @@ function openCard(id) {
   if (c.priority) badges.push(`<span class="badge badge-priority-${c.priority}">${c.priority}</span>`);
   if (c.urgent) badges.push(`<span class="badge badge-urgent">urgent</span>`);
   if (c.late) badges.push(`<span class="badge badge-late">late</span>`);
+  if (c.stale) badges.push(`<span class="badge" style="background:#b45309">stale${c.days_idle != null ? ' · ' + c.days_idle + 'd' : ''}</span>`);
   if (c.type) badges.push(`<span class="badge">${c.type}</span>`);
   const dl = c.deadline ? `<span class="${c.late ? 'val late' : 'val'}">${c.deadline}${c.deadline_text ? ' — ' + escapeHtml(c.deadline_text) : ''}</span>` : '<span class="val">—</span>';
   const grid = `

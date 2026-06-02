@@ -194,6 +194,21 @@
         "extra":          {"type": "array", "items": {"type": "string"}}
       }
     },
+    "reporting": {
+      "type": ["object", "null"],
+      "description": "Steering/stakeholder reporting cadence for this project. Astrid uses it to flag when a project is overdue for a report and to scope 'what changed since the last report'.",
+      "additionalProperties": false,
+      "properties": {
+        "cadence": {
+          "type": ["string", "null"],
+          "enum": ["weekly", "fortnightly", "monthly", "quarterly", "ad-hoc", "none", null],
+          "description": "How often this project is reported on. 'ad-hoc'/'none' carry no automatic due-date."
+        },
+        "audience": {"type": ["string", "null"], "description": "Who the report goes to, e.g. 'steering group', 'sponsor'."},
+        "last_reported": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date the last report was issued. Astrid updates this when it produces a steering report."},
+        "next_due": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Optional manual override of the next report date; otherwise derived from cadence + last_reported by the tooling."}
+      }
+    },
     "action_cards_glob": {
       "type": ["string", "null"],
       "description": "Glob pattern to find this project's action-cards, e.g. 'cards/AB-ACME-CLOUD-*.json'."

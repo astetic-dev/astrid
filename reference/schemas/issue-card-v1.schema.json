@@ -72,7 +72,7 @@
         "required": ["type", "ref"],
         "additionalProperties": false,
         "properties": {
-          "type": {"type": "string", "enum": ["file", "url", "issue", "doc", "email", "meeting"]},
+          "type": {"type": "string", "enum": ["file", "url", "issue", "doc", "email", "meeting", "risk", "decision", "milestone", "deliverable"]},
           "ref": {"type": "string"},
           "note": {"type": "string"}
         }

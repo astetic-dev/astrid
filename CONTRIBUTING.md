@@ -6,7 +6,7 @@ Thanks for your interest in extending project-assistant. It's designed to be bui
 
 - **The schemas are the contract.** Everything in `reference/schemas/` defines what a card is. Tooling and any companion read against these. Change a schema thoughtfully: additive (new optional fields) where possible; bump `schema_version` on a breaking change.
 - **The docs are the spec.** `reference/data-model.md` is the source of truth for the card graph, id formats, relationships, and the terminal-status table. If you change behavior, update it there.
-- **Atlas's character lives in** `identity.md`, `spirit.md`, and `rules.md`. Keep additions consistent with the spirit's hard lines (no manipulation, no adversaries, truth over leverage).
+- **Astrid's character lives in** `identity.md`, `spirit.md`, and `rules.md`. Keep additions consistent with the spirit's hard lines (no manipulation, no adversaries, truth over leverage).
 
 ## Adding a card type
 
