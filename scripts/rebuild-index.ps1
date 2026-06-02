@@ -31,6 +31,17 @@ $projects       = @{}
 $globalProjects = @()
 $globalContacts = @()
 
+# Always write a valid JSON array — even for zero or one item. (PowerShell's
+# ConvertTo-Json drops the [] for a single object and writes nothing for an empty
+# pipeline, which would leave a consumer with a missing or non-array file.)
+function Write-JsonArray($items, $path) {
+    $arr = @($items | Where-Object { $null -ne $_ })
+    if ($arr.Count -eq 0) { '[]' | Set-Content $path -Encoding utf8; return }
+    $json = ConvertTo-Json -InputObject $arr -Depth 6
+    if (-not $json.TrimStart().StartsWith('[')) { $json = "[$json]" }
+    $json | Set-Content $path -Encoding utf8
+}
+
 # ---------------------------------------------------------------------------
 # 1. ACTION-CARDS — */cards/*.json with auto-flags
 # ---------------------------------------------------------------------------
@@ -108,7 +119,7 @@ Get-ChildItem -Path $rootAbs -Recurse -Filter '*.json' -File |
 # Per-project _index.json (action-cards)
 foreach ($projDir in $projects.Keys) {
     $idxPath = Join-Path $projDir '_index.json'
-    $projects[$projDir] | ConvertTo-Json -Depth 5 | Set-Content $idxPath -Encoding utf8
+    Write-JsonArray $projects[$projDir] $idxPath
     Write-Verbose "Wrote: $idxPath ($($projects[$projDir].Count) action-cards)"
 }
 
@@ -226,13 +237,13 @@ if (-not (Test-Path $globalIdxDir)) { New-Item -ItemType Directory -Path $global
 $openActions = $globalActions | Where-Object { $_.status -notin @('DONE','CANCELLED') }
 $doneActions = $globalActions | Where-Object { $_.status -in @('DONE','CANCELLED') }
 
-$globalActions  | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir 'cards.json')       -Encoding utf8
-$openActions    | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir 'cards-open.json')  -Encoding utf8
-$doneActions    | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir 'cards-done.json')  -Encoding utf8
-$globalProjects | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir 'projects.json')    -Encoding utf8
-$globalContacts | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir 'contacts.json')    -Encoding utf8
+Write-JsonArray $globalActions  (Join-Path $globalIdxDir 'cards.json')
+Write-JsonArray $openActions     (Join-Path $globalIdxDir 'cards-open.json')
+Write-JsonArray $doneActions     (Join-Path $globalIdxDir 'cards-done.json')
+Write-JsonArray $globalProjects  (Join-Path $globalIdxDir 'projects.json')
+Write-JsonArray $globalContacts  (Join-Path $globalIdxDir 'contacts.json')
 foreach ($t in $otherTypes) {
-    $otherIndexes[$t.folder] | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $globalIdxDir "$($t.folder).json") -Encoding utf8
+    Write-JsonArray $otherIndexes[$t.folder] (Join-Path $globalIdxDir "$($t.folder).json")
 }
 
 $lastRebuildFile = Join-Path $globalIdxDir '.last-rebuild'

@@ -24,9 +24,26 @@ $htmlPath = Join-Path $indexDir 'dashboard.html'
 
 $start = Get-Date
 
-# ---- 1. Read indexes ----
-$cards = Get-Content (Join-Path $indexDir 'cards-open.json') -Raw -Encoding utf8 | ConvertFrom-Json
-$projects = Get-Content (Join-Path $indexDir 'projects.json') -Raw -Encoding utf8 | ConvertFrom-Json
+# ---- 1. Read indexes (tolerate a missing or empty index) ----
+function Read-Index($name) {
+  $p = Join-Path $indexDir $name
+  if (-not (Test-Path $p)) { return @() }
+  $raw = Get-Content $p -Raw -Encoding utf8
+  if ([string]::IsNullOrWhiteSpace($raw)) { return @() }
+  return @($raw | ConvertFrom-Json)
+}
+if (-not (Test-Path (Join-Path $indexDir 'cards-open.json'))) {
+  Write-Warning "No index found in $indexDir — run rebuild-index.ps1 first. Building an empty dashboard."
+}
+$cards    = Read-Index 'cards-open.json'
+$projects = Read-Index 'projects.json'
+$register = @{
+  risks        = Read-Index 'risks.json'
+  issues       = Read-Index 'issues.json'
+  decisions    = Read-Index 'decisions.json'
+  milestones   = Read-Index 'milestones.json'
+  deliverables = Read-Index 'deliverables.json'
+}
 
 # ---- 2. Enrich each card with body.md + log.jsonl + sidecar JSON fields ----
 $enriched = @()
@@ -72,9 +89,17 @@ foreach ($c in $cards) {
   }
 }
 
-# ---- 3. Serialize ----
-$cardsJson = $enriched | ConvertTo-Json -Depth 10 -Compress
-$projectsJson = $projects | ConvertTo-Json -Depth 10 -Compress
+# ---- 3. Serialize (always emit a JSON array, even for 0 or 1 item) ----
+function To-JsonArray($items, [int]$depth = 10) {
+  $arr = @($items | Where-Object { $null -ne $_ })
+  if ($arr.Count -eq 0) { return '[]' }
+  $j = ConvertTo-Json -InputObject $arr -Depth $depth -Compress
+  if (-not $j.StartsWith('[')) { $j = "[$j]" }
+  return $j
+}
+$cardsJson = To-JsonArray $enriched
+$projectsJson = To-JsonArray $projects
+$registerJson = '{' + (($register.Keys | ForEach-Object { '"' + $_ + '":' + (To-JsonArray $register[$_]) }) -join ',') + '}'
 $genDate = (Get-Date).ToString('dddd d MMMM yyyy')
 
 # ---- 4. HTML template ----
@@ -236,6 +261,19 @@ $template = @'
   .modal-section .log-entry .ts { font-family: 'Consolas', monospace; font-size: 11px; color: var(--text-on-light-dim); margin-right: 10px; }
   .modal-section .log-entry .who { background: var(--primary); color: white; font-size: 10px; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: .5px; margin-right: 8px; }
   .modal-section .log-entry .action { font-weight: 600; color: var(--accent); margin-right: 6px; }
+  .register { margin-top: 30px; }
+  .register.hidden { display: none; }
+  .register-title { color: var(--text-on-dark); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-on-dark); }
+  .reg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .reg-group { background: var(--bg-panel); border-radius: var(--radius); box-shadow: var(--shadow-card); padding: 16px 18px; }
+  .reg-group h4 { margin: 0 0 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+  .reg-group h4 .cnt { background: var(--primary); color: #fff; border-radius: 999px; font-size: 11px; padding: 1px 8px; }
+  .reg-item { padding: 8px 0; border-top: 1px solid var(--border-on-light); }
+  .reg-item:first-of-type { border-top: none; }
+  .reg-item .rid { font-family: 'Consolas', monospace; font-size: 10px; color: var(--text-on-light-dim); letter-spacing: .3px; }
+  .reg-item .rtitle { color: var(--text-on-light); font-size: 13px; line-height: 1.35; margin: 2px 0; }
+  .reg-item .rmeta { font-size: 11px; color: var(--text-on-light-dim); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .reg-item .rstatus { text-transform: uppercase; letter-spacing: .5px; font-size: 9px; background: rgba(0,0,0,.06); padding: 1px 6px; border-radius: 3px; }
   footer { text-align: center; padding: 32px; font-size: 12px; color: var(--text-on-dark-faint); }
   footer code { background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', monospace; }
 </style>
@@ -268,6 +306,7 @@ $template = @'
       <div class="col col-normal"><div class="col-header"><h3>In progress</h3><span class="count" id="count-normal">0</span></div><div id="col-normal"></div></div>
       <div class="col col-wait"><div class="col-header"><h3>Waiting / Planned</h3><span class="count" id="count-wait">0</span></div><div id="col-wait"></div></div>
     </div>
+    <div class="register hidden" id="register"></div>
   </section>
 </main>
 
@@ -280,6 +319,7 @@ const CARDS = __CARDS_JSON__;
 const PROJECTS_META = __PROJECTS_JSON__;
 const ISSUE_BASE = '__ISSUE_BASE__';
 const WIKI_BASE = '__WIKI_BASE__';
+const REGISTER = __REGISTER_JSON__;
 
 document.getElementById('meta-info').innerHTML = '__GEN_DATE__';
 document.getElementById('gen-date').textContent = '__GEN_DATE__';
@@ -356,6 +396,23 @@ function renderCard(c) {
       <div class="meta">${deadlineHtml}${eigHtml}<span class="status">${c.status}</span>${flags.length ? `<span class="flags">${flags.join(' ')}</span>` : ''}</div>
     </div>`;
 }
+function renderRegister(pid) {
+  const el = document.getElementById('register');
+  const groups = [
+    { label: 'Risks',        items: (REGISTER.risks        || []).filter(x => x.project_id === pid), meta: r => [ (r.probability && r.impact) ? `${r.probability}×${r.impact}` : '', (r.score != null) ? 'score ' + r.score : '', r.response ].filter(Boolean).join(' · ') },
+    { label: 'Issues',       items: (REGISTER.issues       || []).filter(x => x.project_id === pid), meta: r => [ r.severity ? 'sev ' + r.severity : '', r.priority ? 'prio ' + r.priority : '', r.type ].filter(Boolean).join(' · ') },
+    { label: 'Decisions',    items: (REGISTER.decisions    || []).filter(x => x.project_id === pid), meta: r => [ r.date ].filter(Boolean).join(' · ') },
+    { label: 'Milestones',   items: (REGISTER.milestones   || []).filter(x => x.project_id === pid), meta: r => [ r.target_date ? 'target ' + r.target_date : '', (r.gate === true) ? 'gate' : '' ].filter(Boolean).join(' · ') },
+    { label: 'Deliverables', items: (REGISTER.deliverables || []).filter(x => x.project_id === pid), meta: r => [ r.due_date ? 'due ' + r.due_date : '' ].filter(Boolean).join(' · ') }
+  ].filter(g => g.items.length);
+  if (!groups.length) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+  el.classList.remove('hidden');
+  el.innerHTML = '<h3 class="register-title">Project register</h3><div class="reg-grid">' + groups.map(g => `
+    <div class="reg-group"><h4>${g.label}<span class="cnt">${g.items.length}</span></h4>
+      ${g.items.map(it => { const m = g.meta(it); return `<div class="reg-item"><div class="rid">${escapeHtml(it.id)}</div><div class="rtitle">${escapeHtml(it.title || '')}</div><div class="rmeta"><span class="rstatus">${escapeHtml(it.status || '')}</span>${m ? `<span>${escapeHtml(m)}</span>` : ''}</div></div>`; }).join('')}
+    </div>`).join('') + '</div>';
+}
+
 function showProject(pid) {
   const project = PROJECTS_META.find(p => p.id === pid);
   if (!project) return;
@@ -376,6 +433,7 @@ function showProject(pid) {
   document.getElementById('count-urgent').textContent = buckets.urgent.length;
   document.getElementById('count-normal').textContent = buckets.normal.length;
   document.getElementById('count-wait').textContent = buckets.wait.length;
+  renderRegister(pid);
   document.getElementById('view-grid').classList.add('hidden');
   document.getElementById('view-detail').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -453,6 +511,7 @@ document.addEventListener('keydown', e => {
 # ---- 5. Inject data ----
 $html = $template.Replace('__CARDS_JSON__', $cardsJson)
 $html = $html.Replace('__PROJECTS_JSON__', $projectsJson)
+$html = $html.Replace('__REGISTER_JSON__', $registerJson)
 $html = $html.Replace('__ISSUE_BASE__', $IssueBase)
 $html = $html.Replace('__WIKI_BASE__', $WikiBase)
 $html = $html.Replace('__GEN_DATE__', $genDate)
@@ -463,4 +522,9 @@ $dur = ((Get-Date) - $start).TotalMilliseconds
 $size = [int]((Get-Item $htmlPath).Length / 1024)
 Write-Host ("Done: {0}  ({1} KB, {2} ms)" -f $htmlPath, $size, [int]$dur) -ForegroundColor Green
 
-if ($Open) { Start-Process $htmlPath }
+if ($Open) {
+  # Cross-platform open. ($IsWindows is undefined on Windows PowerShell 5.1 → treat as Windows.)
+  if ($IsMacOS)      { & open $htmlPath }
+  elseif ($IsLinux)  { & xdg-open $htmlPath }
+  else               { Start-Process $htmlPath }
+}

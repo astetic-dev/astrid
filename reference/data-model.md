@@ -116,7 +116,7 @@ The cards are the source of truth; the `_index/` is a derived, disposable cache 
 
 - **`rebuild-index.ps1`** scans every card, recomputes the `late`/`urgent` auto-flags (writing them back into the cards), and emits the JSON indexes. Run it after any session that changes cards.
 - **`generate-dashboard.ps1`** reads the open-cards index, enriches each card with its `.md` body, `.log.jsonl`, and `latest_update`, and writes a single self-contained `dashboard.html` — projects as cards, drill into a project to see Urgent / In progress / Waiting columns, click a card for the full detail. Optional `-IssueBase` / `-WikiBase` parameters turn `issue`/`doc` source refs into deep links.
-- **`validate-cards.ps1`** checks every action-card against the schema (full validation via `ajv-cli` when Node is present, light checks otherwise).
+- **`validate-cards.ps1`** checks every card against its schema (full validation when `ajv-cli` is installed — `npm i -g ajv-cli` — and dependency-free light checks otherwise; having Node alone is not enough).
 
 Because the index is derived, you can delete `_index/` at any time and rebuild it. Nothing of value lives there.
 

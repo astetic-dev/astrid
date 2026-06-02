@@ -1,8 +1,10 @@
 # validate-cards.ps1
 # Validates every card in a workspace against its JSON schema.
-# Full validation uses ajv-cli via npx when Node.js is available; otherwise it
-# falls back to dependency-free checks derived FROM each schema (schema_version
-# const, required fields present, id pattern) — no hardcoded field lists.
+# Full validation uses ajv-cli when it is installed (npm i -g ajv-cli, or available
+# via npx with network access); otherwise it falls back to dependency-free checks
+# derived FROM each schema (schema_version const, required fields present, id
+# pattern, filename==id) — no hardcoded field lists. The fallback needs nothing but
+# PowerShell. Note: having Node installed is NOT enough; ajv-cli itself must resolve.
 #
 # Card type is decided by filename / location:
 #   project.json            -> project-card-v1

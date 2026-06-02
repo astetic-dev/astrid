@@ -43,17 +43,21 @@ Separate from the assistant folder, the optional **`sample-workspace/`** ships a
 
 ```
 sample-workspace/
+├── _preferences.md              ← how "you" (Sarah Chen) like to work
 ├── _contacts/                   ← the people, by id
 ├── projects/ACME/cloud-migration/
 │   ├── project.json             ← the project anchor
-│   ├── cards/                   ← 5 action-cards (task, decision, monitoring, blocker)
-│   └── meetings/                ← a meeting-card showing the factual layer
+│   ├── cards/                   ← 6 action-cards (task, decision, monitoring, blocker)
+│   ├── meetings/                ← a meeting-card (the factual layer)
+│   ├── risks/ decisions/ issues/ milestones/ deliverables/   ← one of each extended card
 └── _index/                      ← pre-generated dashboard.html + indexes
 ```
 
 ## The tooling
 
-The cards are plain files you can edit by hand or with Atlas. Three PowerShell scripts (cross-platform via `pwsh`) turn them into a live view:
+The cards are plain files you can edit by hand or with Atlas. Three PowerShell scripts turn them into a live view.
+
+**Prerequisite:** PowerShell 7+ (`pwsh`) — free and cross-platform (Windows/macOS/Linux). That's the only requirement. Node.js + `ajv-cli` are optional, used solely for stricter JSON-Schema validation; without them `validate-cards.ps1` runs dependency-free light checks.
 
 ```powershell
 # from your workspace root:

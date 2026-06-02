@@ -13,8 +13,19 @@ One project — **ACME-CLOUD**, migrating Acme's three remaining on-prem applica
 | SC-ACME-CLOUD-0003 | decision | TODO | a decision-card (deliverable = a recorded choice), auto-**urgent** |
 | SC-ACME-CLOUD-0004 | monitoring | DOING | a no-end-date watch item (the contract backstop) |
 | SC-ACME-CLOUD-0005 | decision | DONE | a closed card — drops out of the open dashboard |
+| SC-ACME-CLOUD-0006 | task | DOING | spawned from an issue (`sources` → `ISS-ACME-CLOUD-0001`) — the issue→action loop |
 
-Plus a **meeting-card** (`MTG-ACME-CLOUD-2026-05-26-01`) showing the factual layer Atlas writes — decisions and the action-cards a meeting produced — and three **contact-cards** in `_contacts/`.
+Plus a **meeting-card** (`MTG-ACME-CLOUD-2026-05-26-01`) showing the factual layer Atlas writes, three **contact-cards** in `_contacts/`, a `_preferences.md` (how "Sarah" likes to work), and **one of each extended card** so the register is visible end-to-end:
+
+| Extended card | Id | Shows off |
+|---|---|---|
+| risk | RISK-ACME-CLOUD-001 | P×I assessment, response, mitigated by action `0001` |
+| issue | ISS-ACME-CLOUD-0001 | severity vs priority; spawns action `0006` |
+| decision | DEC-ACME-CLOUD-001 | ADR (context/decision/consequences + options), resolves action `0003`, drives `0002`, tagged Cynefin `complicated` |
+| milestone | MS-ACME-CLOUD-001 | a gating milestone with a baseline vs target date; rolls up `DLV-…-001` |
+| deliverable | DLV-ACME-CLOUD-001 | acceptance criteria + recipient, produced by action `0002` |
+
+The extended cards render in the **Project register** section of the dashboard (open a project to see them under the three action-card columns).
 
 ## See it
 

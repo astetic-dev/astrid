@@ -1,12 +1,14 @@
-{
-  "id": "SC-ACME-CLOUD-0005",
-  "title": "Approve the landing-zone network design",
-  "status": "DONE",
-  "priority": "medium",
-  "late": false,
-  "urgent": false,
-  "assignee": "internal / Sarah Chen",
-  "deadline": "2026-05-08",
-  "project": "ACME/CLOUD",
-  "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0005.json"
-}
+[
+  {
+    "id": "SC-ACME-CLOUD-0005",
+    "title": "Approve the landing-zone network design",
+    "status": "DONE",
+    "priority": "medium",
+    "late": false,
+    "urgent": false,
+    "assignee": "internal / Sarah Chen",
+    "deadline": "2026-05-08",
+    "project": "ACME/CLOUD",
+    "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0005.json"
+  }
+]
