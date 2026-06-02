@@ -1,17 +1,11 @@
 # Astrid — your project assistant
 
-<!-- VIDEO PLACEMENT ─ when the intro video is ready:
-     1. drop the poster image at docs/astrid-intro-poster.jpg
-     2. replace VIDEO_URL below with the video link
-     3. uncomment the poster block and delete the "coming soon" line beneath it
+<!-- To use a custom landscape poster instead of the auto thumbnail, drop it at
+     docs/astrid-intro-poster.jpg and swap the <img src> below. -->
 <p align="center">
-  <a href="VIDEO_URL"><img src="docs/astrid-intro-poster.jpg" alt="Watch Astrid introduce herself" width="720"></a>
+  <a href="https://www.youtube.com/watch?v=hMdUBDRynO8"><img src="https://img.youtube.com/vi/hMdUBDRynO8/hqdefault.jpg" alt="Watch Astrid introduce herself" width="480"></a>
 </p>
-<p align="center"><a href="VIDEO_URL"><strong>Watch Astrid introduce herself</strong></a></p>
--->
-<p align="center">
-  <strong>▶ Watch Astrid introduce herself</strong> · <em>intro video coming soon</em>
-</p>
+<p align="center"><a href="https://www.youtube.com/watch?v=hMdUBDRynO8"><strong>Watch Astrid introduce herself</strong></a></p>
 
 ---
 
