@@ -26,6 +26,11 @@ It is built on three operational cards — **project-card**, **action-card**, **
 
 > Astrid is the *operational* half of a card-based methodology. Its companion **Miles** (the meeting reflection coach) is the *reflective* half. They share the same data model — see [Companions](#companions).
 
+> [!IMPORTANT]
+> **The UI here is deliberately minimal — by design.** The only interface that ships is `dashboard.html`: a single, read-only reference view. The product is the *data model* — durable JSON cards you own — not a front-end. The dashboard exists to prove the cards work and to give you something to look at on day one; it is **not** meant to be the way you view or edit your work.
+>
+> So this is an open invitation: **build your own UI on top of the cards.** A web app, a TUI, a mobile view, an editor that creates and edits cards, a sync to Notion or Obsidian — anything that reads and writes the schemas in `reference/schemas/`. The schemas are the contract; `dashboard.html` is just one renderer. If you build something, please share it back — see [CONTRIBUTING](CONTRIBUTING.md).
+
 ---
 
 ## Get started in 5 minutes
