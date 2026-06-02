@@ -11,19 +11,25 @@ This system carries a method, but a deliberately thin one. The goal is not to im
 
 Everything else in this document is in service of those two. If a rule ever fights them, the rule loses.
 
-## Three cards, three questions
+## The cards — all nine, in three tiers
 
-The system has three card types because projects have three different kinds of memory, each with its own lifecycle:
+Nine card types in total. Every project uses the **core** three; the **supporting** contact-card keeps people in one place; the **extended** five exist only when a project earns the structure (detailed in [More cards](#more-cards-when-you-need-them) below). All of them link, directly or indirectly, down to action-cards — the operational heartbeat.
 
-| Card | Answers | Lifecycle |
-|---|---|---|
-| **project-card** | "What is this for, and where does it stand?" | One per project. Written once, updated when status/scope/health meaningfully change. |
-| **action-card** | "What needs doing, by whom, by when — and what's it waiting on?" | Many per project. The operational heartbeat; created and closed constantly. |
-| **meeting-card** | "What happened in this meeting, and what work did it produce?" | One per meeting. Factual record; optionally the seed for reflection (via the Miles companion). |
+| Tier | Card | Answers | Count | Lifecycle |
+|---|---|---|---|---|
+| core | **project-card** | "What is this for, and where does it stand?" | one per project | written once; updated when status/scope/health change |
+| core | **action-card** | "What needs doing, by whom, by when — what's it waiting on?" | many per project | created and closed constantly |
+| core | **meeting-card** | "What happened in this meeting, and what work did it produce?" | one per meeting | factual record; optional seed for reflection (Miles) |
+| supporting | **contact-card** | "Who is this person, across all my projects?" | one per person (central in `_contacts/`) | persists; observations accrue, departures recorded |
+| extended | **issue-card** | "What's broken / unclear / asked — and what work does it need?" | as needed | open → in-progress → resolved → closed |
+| extended | **risk-card** | "What might go wrong, how bad, and what are we doing?" | as needed | open → mitigating → accepted / realized / closed |
+| extended | **decision-card** | "What did we decide, why, and what did we rule out?" | as needed | proposed → accepted → (superseded / deprecated) |
+| extended | **milestone-card** | "Did we reach this moment, on time vs the baseline?" | as needed | planned → at-risk → met / missed |
+| extended | **deliverable-card** | "What must we produce, who accepts it, against what criteria?" | as needed | not-started → in-progress → in-review → accepted / rejected |
 
-A fourth, supporting artifact — the **contact-card** — exists so a person's details live in exactly one place and every card just references them by id.
+Most projects live happily on the core three (plus contact-cards for the people). Reach for an extended card only when it earns its keep — see [More cards](#more-cards-when-you-need-them).
 
-See [reference/data-model.md](reference/data-model.md) for how they link into one graph.
+See [reference/data-model.md](reference/data-model.md) for how all nine link into one graph, the id formats, and the relationship chains down to action-cards.
 
 ## The action-card states
 
