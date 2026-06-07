@@ -2,7 +2,7 @@
 
 All notable changes to project-assistant are documented here. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.0] — 2026-06-08
 
 ### Added
 - **Project-overview portal** (`scripts/generate-portal.ps1` → `_index/portal.html`). A navigable companion to the dashboard: project tiles open a project page with a **phase header** (derived from the project's status: Initiation → Execution → Go-live → Aftercare → Done) and tabs for **Actions / Risks / Deliverables / Documents**. Action-cards, a risk's mitigating action-cards, and a deliverable's action-cards are all **click-through** to a read-only card detail (status, type, deadline, acceptance criteria, relationships). Self-contained HTML, no external assets.

@@ -55,6 +55,10 @@ astrid/
 ├── scripts/
 │   ├── rebuild-index.ps1        ← scan cards → JSON indexes + auto-flags
 │   ├── generate-dashboard.ps1   ← indexes → self-contained dashboard.html
+│   ├── generate-portal.ps1      ← indexes + documents → navigable project portal
+│   ├── new-project.ps1          ← scaffold a new project's folders + starter project.json
+│   ├── intake-scaffold.ps1      ← an intake.json → project + deliverable/risk/milestone cards
+│   ├── render-doc-pdfs.ps1      ← (optional, Windows) render docx/xlsx → PDF for inline viewing
 │   └── validate-cards.ps1       ← check cards against the schema
 └── reference/
     ├── data-model.md            ← the cards, one graph
@@ -81,7 +85,7 @@ sample-workspace/
 
 ## The tooling
 
-The cards are plain files you can edit by hand or with Astrid. Three PowerShell scripts turn them into a live view.
+The cards are plain files you can edit by hand or with Astrid. A few small PowerShell scripts turn them into live views and scaffold new work.
 
 **Prerequisite:** PowerShell 7+ (`pwsh`) — free and cross-platform (Windows/macOS/Linux). That's the only requirement. Node.js + `ajv-cli` are optional, used solely for stricter JSON-Schema validation; without them `validate-cards.ps1` runs dependency-free light checks.
 
@@ -92,6 +96,10 @@ pwsh -File path/to/scripts/generate-dashboard.ps1 -Root . -Open
 ```
 
 `rebuild-index.ps1` recomputes the `late`/`urgent` flags and writes the JSON indexes. `generate-dashboard.ps1` builds a single self-contained `dashboard.html` — projects as cards, click into a project for Urgent / In progress / Waiting columns, click a card for its full detail, body, and activity log. Optional `-IssueBase`/`-WikiBase` parameters deep-link your source refs into your tracker or wiki.
+
+`generate-portal.ps1` builds a second, navigable view — **`portal.html`**: each project gets a phase header (read from its status) and tabs for **Actions, Risks, Deliverables, Documents**, where a risk's mitigating actions and a deliverable's actions click through to the card that carries them. Drop a `documents/` folder in a project and its files appear in the Documents tab — PDF, HTML, PNG and Markdown render **inline**; Office files render inline once `render-doc-pdfs.ps1` (optional, Windows + Office) converts them to PDF.
+
+Starting a project is two scripts, not hand-written JSON. `new-project.ps1` scaffolds the folders and a valid starter `project.json`; `intake-scaffold.ps1` turns a small `intake.json` — customer, scope, stakeholders, and the deliverables/risks/milestones you already know — into a populated project, a schema-valid card for each, inventing nothing. See [`scripts/intake.example.json`](scripts/intake.example.json).
 
 ## A question worth answering: your email
 
