@@ -7,10 +7,24 @@
     "late": false,
     "urgent": false,
     "stale": false,
-    "days_idle": 26,
+    "days_idle": 31,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-05-08",
+    "deadline_text": "before landing-zone build starts",
     "project": "ACME/CLOUD",
+    "type": "decision",
+    "acceptance_criteria": [
+      null
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0005.json"
   }
 ]

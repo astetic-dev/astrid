@@ -9,6 +9,9 @@
     "impact": "high",
     "score": 16,
     "response": "mitigate",
-    "raised": "2026-05-20"
+    "raised": "2026-05-20",
+    "mitigation_action_cards": [
+      "SC-ACME-CLOUD-0001"
+    ]
   }
 ]

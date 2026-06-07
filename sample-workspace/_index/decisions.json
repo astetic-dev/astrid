@@ -5,6 +5,9 @@
     "title": "Phased cutover over single-weekend big-bang",
     "status": "proposed",
     "file": "projects/ACME/cloud-migration/decisions/DEC-ACME-CLOUD-001.json",
-    "date": "2026-06-02"
+    "date": "2026-06-02",
+    "action_cards": [
+      "SC-ACME-CLOUD-0002"
+    ]
   }
 ]

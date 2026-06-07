@@ -121,7 +121,13 @@ Get-ChildItem -Path $rootAbs -Recurse -Filter '*.json' -File |
             days_idle   = $daysIdle
             assignee    = if ($card.assignee) { "$($card.assignee.party) / $($card.assignee.person)" } else { $null }
             deadline    = if ($card.deadline) { $card.deadline.date } else { $null }
+            deadline_text = if ($card.deadline) { $card.deadline.text } else { $null }
             project     = if ($card.project) { "$($card.project.customer_code)/$($card.project.project_code)" } else { $null }
+            type        = $card.type
+            acceptance_criteria = @($card.acceptance_criteria)
+            depends_on  = @($card.depends_on)
+            blocks      = @($card.blocks)
+            relates_to  = @($card.relates_to)
             file        = $cardPath.Replace($rootAbs + [IO.Path]::DirectorySeparatorChar, '').Replace('\', '/')
         }
         $globalActions += $entry
@@ -241,7 +247,8 @@ $otherTypes = @(
 )
 $passthrough = @('severity','priority','probability','impact','score','type',
                  'target_date','baseline_date','actual_date','due_date','gate',
-                 'response','resolution','milestone_id','raised','resolved','date')
+                 'response','resolution','milestone_id','raised','resolved','date',
+                 'mitigation_action_cards','action_cards','acceptance_criteria')
 $otherIndexes = @{}
 foreach ($t in $otherTypes) {
     $items = @()
