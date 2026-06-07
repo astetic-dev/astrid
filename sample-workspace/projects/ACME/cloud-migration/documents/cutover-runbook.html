@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Cutover runbook — Acme cloud migration</title>
+<style>body{font-family:'Segoe UI',Arial,sans-serif;max-width:760px;margin:40px auto;color:#24252F;line-height:1.55;padding:0 20px;}
+h1{color:#CC3333;} h2{color:#24252F;border-bottom:2px solid #CED5D8;padding-bottom:4px;} code{background:#F7F7F7;padding:1px 5px;border-radius:4px;}</style></head>
+<body>
+<h1>Cutover runbook — Acme cloud migration</h1>
+<p>A worked example document, shown inline in the project portal's <b>Documents</b> tab. Any PDF, HTML, PNG or Markdown file placed in a project's <code>documents/</code> folder is rendered inline; Office files (docx/xlsx) are shown inline once rendered to PDF (see <code>scripts/render-doc-pdfs.ps1</code>), otherwise offered as a download.</p>
+<h2>1. Pre-cutover</h2>
+<ul><li>Confirm backup of the on-prem datastore is complete and restorable.</li><li>Freeze schema changes 24h before the window.</li><li>Notify Acme stakeholders of the maintenance window.</li></ul>
+<h2>2. Cutover</h2>
+<ul><li>Switch DNS to the new cloud endpoint.</li><li>Run the data-sync to catch the final delta.</li><li>Smoke-test the critical user journeys.</li></ul>
+<h2>3. Rollback trigger</h2>
+<p>If smoke tests fail or error rate exceeds the agreed threshold, revert DNS and re-open the on-prem endpoint. The decision is the cutover lead's; document it on the relevant decision-card.</p>
+</body></html>

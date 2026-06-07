@@ -7,10 +7,25 @@
     "late": true,
     "urgent": true,
     "stale": false,
-    "days_idle": 4,
+    "days_idle": 9,
     "assignee": "vendor / Amir Haddad",
     "deadline": "2026-05-29",
+    "deadline_text": "needed before the first cutover can be scheduled",
     "project": "ACME/CLOUD",
+    "type": "blocker",
+    "acceptance_criteria": [
+      "Landing-zone design document signed off by Northwind in writing",
+      "Sign-off references the agreed networking and backup configuration"
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      "SC-ACME-CLOUD-0002"
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0001.json"
   },
   {
@@ -21,10 +36,26 @@
     "late": false,
     "urgent": false,
     "stale": false,
-    "days_idle": 13,
+    "days_idle": 18,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-06-20",
+    "deadline_text": "draft ready for vendor review two weeks before cutover",
     "project": "ACME/CLOUD",
+    "type": "task",
+    "acceptance_criteria": [
+      "Step-by-step cutover sequence with owners and timings",
+      "Tested rollback path that fits inside the maintenance window",
+      "Reviewed by Northwind"
+    ],
+    "depends_on": [
+      "SC-ACME-CLOUD-0001"
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0002.json"
   },
   {
@@ -34,11 +65,26 @@
     "priority": "high",
     "late": false,
     "urgent": true,
-    "stale": false,
-    "days_idle": 11,
+    "stale": true,
+    "days_idle": 16,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-06-10",
+    "deadline_text": "decision needed at the next steering",
     "project": "ACME/CLOUD",
+    "type": "decision",
+    "acceptance_criteria": [
+      "Recommendation written with the risk trade-off stated in one paragraph",
+      "Decision recorded on the steering meeting-card with the decision-maker named"
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      "SC-ACME-CLOUD-0002"
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0003.json"
   },
   {
@@ -49,10 +95,24 @@
     "late": false,
     "urgent": false,
     "stale": true,
-    "days_idle": 18,
+    "days_idle": 23,
     "assignee": "internal / Sarah Chen",
     "deadline": null,
+    "deadline_text": "ongoing — hard backstop 2026-12-31",
     "project": "ACME/CLOUD",
+    "type": "monitoring",
+    "acceptance_criteria": [
+      "On-prem hosts decommissioned and contract termination confirmed before 2026-12-31"
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0004.json"
   },
   {
@@ -63,10 +123,25 @@
     "late": false,
     "urgent": false,
     "stale": false,
-    "days_idle": 5,
+    "days_idle": 10,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-06-12",
+    "deadline_text": "before Billing cutover planning can proceed",
     "project": "ACME/CLOUD",
+    "type": "task",
+    "acceptance_criteria": [
+      "Root cause of the >2h batch runtime identified",
+      "A fix or mitigation proposed and validated in the test env"
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0006.json"
   },
   {
@@ -77,10 +152,25 @@
     "late": false,
     "urgent": true,
     "stale": false,
-    "days_idle": 2,
+    "days_idle": 7,
     "assignee": "internal / Sarah Chen",
     "deadline": "2026-06-16",
+    "deadline_text": "before the OrderHub cutover can be scheduled",
     "project": "ACME/CLOUD",
+    "type": "task",
+    "acceptance_criteria": [
+      "Rollback rehearsed end-to-end within the 4-hour window",
+      "Updated steps folded into the runbook deliverable (DLV-ACME-CLOUD-001)"
+    ],
+    "depends_on": [
+      null
+    ],
+    "blocks": [
+      null
+    ],
+    "relates_to": [
+      null
+    ],
     "file": "projects/ACME/cloud-migration/cards/SC-ACME-CLOUD-0007.json"
   }
 ]

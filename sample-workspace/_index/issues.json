@@ -10,7 +10,10 @@
     "type": "defect",
     "resolution": null,
     "raised": "2026-05-28",
-    "resolved": null
+    "resolved": null,
+    "action_cards": [
+      "SC-ACME-CLOUD-0006"
+    ]
   },
   {
     "id": "ISS-ACME-CLOUD-0002",
@@ -23,6 +26,9 @@
     "type": "defect",
     "resolution": null,
     "raised": "2026-05-31",
-    "resolved": null
+    "resolved": null,
+    "action_cards": [
+      "SC-ACME-CLOUD-0007"
+    ]
   }
 ]

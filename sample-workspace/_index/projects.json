@@ -14,7 +14,7 @@
     "last_reported": "2026-05-01",
     "report_next_due": "2026-05-31",
     "reporting_overdue": true,
-    "days_since_reported": 32,
+    "days_since_reported": 37,
     "risk_count": 2,
     "file": "projects/ACME/cloud-migration/project.json"
   }

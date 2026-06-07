@@ -2,6 +2,15 @@
 
 All notable changes to project-assistant are documented here. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-06-08
+
+### Added
+- **Project-overview portal** (`scripts/generate-portal.ps1` → `_index/portal.html`). A navigable companion to the dashboard: project tiles open a project page with a **phase header** (derived from the project's status: Initiation → Execution → Go-live → Aftercare → Done) and tabs for **Actions / Risks / Deliverables / Documents**. Action-cards, a risk's mitigating action-cards, and a deliverable's action-cards are all **click-through** to a read-only card detail (status, type, deadline, acceptance criteria, relationships). Self-contained HTML, no external assets.
+- **Document handling.** A `documents/` folder per project is surfaced in the portal's Documents tab. **PDF, HTML, PNG and Markdown render inline** (viewed, not downloaded); Office files render inline once converted to PDF.
+- **`scripts/render-doc-pdfs.ps1`** — optional helper (Windows + Microsoft Office) that renders `documents/*.docx|*.xlsx` to a sibling PDF for inline viewing, change-detected. Non-Windows users keep documents as PDF/HTML/Markdown and need nothing extra.
+- **Richer index.** `rebuild-index` now carries `type`, `acceptance_criteria`, and `depends_on`/`blocks`/`relates_to` on action-cards, and `mitigation_action_cards`/`action_cards`/`acceptance_criteria` on register cards — this is what powers the portal's click-through links between risks/deliverables and the actions that resolve them.
+- Sample workspace: a `documents/` example (`cutover-runbook.html`) so the Documents tab and inline viewer are demonstrated out of the box.
+
 ## [1.0.0] — 2026-06-02
 
 Initial public release.

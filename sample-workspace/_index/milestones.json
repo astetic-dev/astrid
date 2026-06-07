@@ -8,6 +8,10 @@
     "target_date": "2026-09-15",
     "baseline_date": "2026-09-01",
     "actual_date": null,
-    "gate": true
+    "gate": true,
+    "action_cards": [
+      "SC-ACME-CLOUD-0001",
+      "SC-ACME-CLOUD-0002"
+    ]
   }
 ]

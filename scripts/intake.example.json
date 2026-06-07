@@ -1,0 +1,31 @@
+{
+  "customer": { "code": "NORTH", "name": "Northwind Trading" },
+  "folder": "orderhub-rollout",
+  "project_code": "OHUB",
+  "title": "Northwind OrderHub rollout",
+  "status": "initiation",
+  "purpose": "Roll out the OrderHub order-capture service to Northwind's three regions, replacing the legacy fax-and-email intake.",
+  "scope_in": ["OrderHub service deployment", "Integration with the existing ERP", "Regional cutover (3 regions)"],
+  "scope_out": ["ERP replacement", "Historical order migration beyond 12 months"],
+  "success_criteria": ["OrderHub live in all three regions", "Order error rate below 1%", "Sign-off from regional leads"],
+  "stakeholders": [
+    { "name": "Dana Reyes", "role": "project sponsor", "party": "customer" },
+    { "name": "Pat Lee", "role": "tech lead", "party": "internal" }
+  ],
+  "owner_person": "Pat Lee",
+  "start_date": "2026-06-15",
+  "classification": "M",
+  "budget": { "hours": 120, "amount": 48000, "currency": "EUR", "funding_source": "Q-2026-118" },
+  "quote_file": "documents/quote.pdf",
+  "deliverables": [
+    { "name": "OrderHub deployed to production", "acceptance": ["Reachable on the regional endpoints", "mTLS enabled"], "format": "deployed service" },
+    { "name": "Cutover runbook", "acceptance": ["Reviewed by regional leads"], "format": "document" }
+  ],
+  "risks": [
+    { "title": "ERP integration window slips", "description": "The ERP team's change window is shared and may slip, delaying integration testing.", "category": "schedule", "response": "mitigate", "probability": "medium", "impact": "high" }
+  ],
+  "milestones": [
+    { "name": "First region live", "target_date": "2026-08-01", "gating": true },
+    { "name": "All regions live", "target_date": "2026-09-15", "gating": true }
+  ]
+}
